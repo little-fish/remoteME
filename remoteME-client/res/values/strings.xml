@@ -96,7 +96,7 @@
     <string name="connection_service_connection_lost_text">Connection to the server has been lost.</string>
     <string name="connection_service_disconnected_text">Disconnected.</string>
     
-    <string name="remote_mouse_description_text">finger moving - cursor moving\two fingers moving - scrolling\nnsingle touch - left click\nlong touch - right click\ndouble touch - double click\ntriple touch - show/hide keyboard</string>
+    <string name="remote_mouse_description_text">finger moving - cursor moving\ntwo fingers moving - scrolling\nsingle touch - left click\nlong touch - right click\ndouble touch - double click\ntriple touch - show/hide keyboard</string>
     
     <string name="menu_activity_main_preferences_text">Preferences</string>
     <string name="menu_activity_main_about_text">About</string>

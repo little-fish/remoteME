@@ -222,10 +222,6 @@ public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
 					String hostName = simpleMessage.getAddInfo().split(SimpleMessage.SEPARATOR)[1];
 					String hostOsName = simpleMessage.getAddInfo().split(SimpleMessage.SEPARATOR)[2];
 					String macAddress = simpleMessage.getAddInfo().split(SimpleMessage.SEPARATOR)[3];
-					Log.d(TAG_CLASS_NAME, "full: " + simpleMessage.getAddInfo());
-					Log.d(TAG_CLASS_NAME, "host name: " + hostName);
-					Log.d(TAG_CLASS_NAME, "host os name: " + hostOsName);
-					Log.d(TAG_CLASS_NAME, "mac addr: " + macAddress);
 					
 					String hostAddress = responseDatagramPacket.getAddress().getHostAddress();
 					long hostPort = responseDatagramPacket.getPort();
