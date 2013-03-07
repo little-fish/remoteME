@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="295dip"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <fragment
+        android:id="@+id/fragment_remote_controllers"
+        class="cz.babi.android.remoteme.ui.ActivityDialogListOfRemoteControllers$RemoteControllersFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:minWidth="295dip" />
+
+</LinearLayout>

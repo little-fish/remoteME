@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="text_app_name">remoteME</string>
+    <string name="text_app_version">1.0.0</string>
+    <string name="text_app_author">babi</string>
+    <string name="text_server">Server</string>
+    <string name="text_connected">Connected</string>
+    <string name="text_to">to</string>
+    
+    <string name="power_control">Power Control</string>
+    <string name="power_shutdown">Shut down</string>
+    <string name="power_restart">Restart</string>
+    <string name="power_logoff_first">Log off</string>
+    <string name="power_logoff_second">(MS Windows only)</string>
+    <string name="presentation">Presentation</string>
+    <string name="presentation_second">Presentation</string>
+    <string name="presentation_start">START</string>
+    <string name="presentation_stop">EXIT</string>
+    <string name="presentation_black">Black</string>
+    <string name="presentation_white">White</string>
+    <string name="presentation_slide">Slide</string>
+    
+    <string name="actionbar_icon_app_description">remoteMe</string>
+    <string name="actionbar_icon_add_description">Add a new server</string>
+    <string name="actionbar_icon_order_description">Order servers</string>
+    
+    <string name="activity_main_empty_server_list_text">No servers available.</string>
+    
+    <string name="button_ok_text">OK</string>
+    <string name="button_cancel_text">Cancel</string>
+    <string name="button_close_text">Close</string>
+    <string name="button_scan_text">Find servers</string>
+    <string name="button_connect_text">Connect</string>
+    <string name="button_disconnect_text">Disconnect</string>
+    
+    <string name="serverrow_icon_os_type_description">Operation system type</string>
+    <string name="serverrow_icon_locked_description">Password set</string>
+    <string name="serverrow_icon_in_db_description">This server is already in DB</string>
+    <string name="serverrow_image_divider_description">Divider</string>
+    
+    <string name="dialog_delete_server_title">Delete server</string>
+    <string name="dialog_delete_server_text">Do you really want to delete current server?</string>
+    
+    <string name="quickaction_icon_arrowUp_description">Arrow up</string>
+    <string name="quickaction_icon_arrowDown_description">Arrow down</string>
+    <string name="quickaction_icon_actionItem_description">ActionItem icon</string>
+    <string name="quickaction_view_addNewServerManual_text">Manual</string>
+    <string name="quickaction_view_addNewServerScan_text">Scan Mode</string>
+    <string name="quickaction_view_orderServersLastConnected_text">Last connected</string>
+    <string name="quickaction_view_orderServersName_text">Server name</string>
+    <string name="quickaction_view_orderServersIPAddress_text">IP address</string>
+    <string name="quickaction_view_orderServersOSType_text">Host OS Type</string>
+    
+    <string name="quickaction_adapter_serverConnect_text">Connect</string>
+    <string name="quickaction_adapter_serverEdit_text">Edit</string>
+    <string name="quickaction_adapter_serverDelete_text">Delete</string>
+    
+    <string name="server_details_new_title_text">Create new server</string>
+    <string name="server_details_edit_title_text">Edit server</string>
+    <string name="server_details_empty_server_name_text">\u003cunnamed\u003e</string>
+    <string name="server_details_server_name_text">Name:</string>
+    <string name="server_details_server_ipAddress_text">IP address:</string>
+    <string name="server_details_server_port_text">Port:</string>
+    <string name="server_details_server_port_hint">4449</string>
+    <string name="server_details_server_password_text">Password:</string>
+    <string name="server_details_server_password_hint">Optional</string>
+    <string name="server_details_server_os_type_text">Host OS type:</string>
+    <string name="server_details_rbtn_os_unix">Linux</string>
+    <string name="server_details_rbtn_os_mac">Mac OS</string>
+    <string name="server_details_rbtn_os_windows">MS Windows</string>
+    <string name="server_details_warning_message_title">You have entered an incorrect:</string>
+    <string name="server_details_warning_message_footer">\n\nPlease type correct data.</string>
+    <string name="server_details_warning_ip_address">\n - IP address</string>
+    <string name="server_details_warning_port">\n - Port</string>
+    
+    <string name="server_search_title_searching_text">Searching...</string>
+    <string name="server_search_title_founded_servers_text">Available servers</string>
+    
+    <string name="server_connect_title_connecting_text">Connecting...</string>
+    <string name="server_connect_title_error_text">Error</string>
+    <string name="server_connect_init_connection_text">Initializing server...</string>
+    <string name="server_connect_auth_connection_text">Authenticating server...</string>
+    <string name="server_connect_error_init_text">Can not connect to server. Is your server running?</string>
+    <string name="server_connect_error_auth_text">Can not authenticating your server. You have wrong password!</string>
+    <string name="server_connect_connected_text">A connection was successfully established.</string>
+    
+    <string name="no_connection_title">No connection</string>
+    <string name="no_connection_error_no_connection_text">No connection available!</string>
+    <string name="no_connection_error_open_settings_text">Would you like to open network settings?</string>
+    
+    <string name="remote_controllers_title_text">Choose controller</string>
+    <string name="remote_controller_icon_description">Remote controller icon</string>
+    <string name="remote_controller_author_text">Author:</string>
+    <string name="remote_controllers_empty_list_text">No remote controls available.</string>
+    
+    <string name="connection_service_connection_lost_text">Connection to the server has been lost.</string>
+    <string name="connection_service_disconnected_text">Disconnected.</string>
+    
+    <string name="remote_mouse_description_text">finger moving - cursor moving\two fingers moving - scrolling\nnsingle touch - left click\nlong touch - right click\ndouble touch - double click\ntriple touch - show/hide keyboard</string>
+    
+    <string name="menu_activity_main_preferences_text">Preferences</string>
+    <string name="menu_activity_main_about_text">About</string>
+    
+	<string name="about_main_text"><b>remoteME</b> is a good-looking, extremely configurabe and open source Android remote controller for your computers no matter what operation system you are using (Linux, MAC OS, or MS Windows).</string>
+	<string name="about_remotes_text">It offers you at least 11 remotes for the most frequent media players plus those which you create by yourself. Remotes for mouse, keyboard and power control are also included.</string>
+	<string name="about_server_text">Before using this application, please be sure you have a remoteME server running on your computer.</string>
+	<string name="about_information_text">For more information, please visit remoteME\'s</string>
+	<string name="about_homepage_text">homepage</string>
+	<string name="about_homepage_html">https://sourceforge.net/projects/remoteme/</string>
+	<string name="about_support_title_text">Support project</string>
+    <string name="about_support_text">If you like this application, and want to support it, you can</string>
+    <string name="about_support_thanks_text">Thank you</string>
+    <string name="about_support_beer_text">buy me a beer</string>
+	<string name="about_license_title_text">License condition</string>
+    <string name="about_license_text">This application is licensed under</string>
+    <string name="about_license_apache_text">Apache License v2.0</string>
+    <string name="about_license_apache_html">http://www.apache.org/licenses/LICENSE-2.0.html</string>
+    <string name="about_license_copyright_text">&#169; 2013 Martin Misiarz,</string>
+    <string name="about_license_copyright_email">dev.misiarz@gmail.com</string>
+    <string name="about_used_content_title_text">Used content</string>
+    <string name="about_content_newquickaction3d_text">NewQuickAction3D</string>
+    <string name="about_content_newquickaction3d_html">https://github.com/lorensiuswlt/NewQuickAction3D</string>
+    <string name="about_content_multiselectlistpreference_text">MultiSelectListPreference</string>
+    <string name="about_content_multiselectlistpreference_html">https://gist.github.com/cardil/4754571</string>
+    <string name="about_content_background_text">Abstract background</string>
+    <string name="about_content_background_html">http://www.sosatko.cz/tapety-na-plochu/detail-tapety/21626.htm</string>
+    <string name="about_used_icons_title_text">Used icons</string>
+    <string name="about_icon_web02ama_text">Web0.2ama</string>
+    <string name="about_icon_web02ama_html">http://chrfb.deviantart.com/art/Web0-2ama-165156124</string>
+    <string name="about_icon_meliae_text">Meliae SVG Icon Theme v. 1.2</string>
+    <string name="about_icon_meliae_html">http://sora-meliae.deviantart.com/art/Meliae-SVG-Icon-Theme-v-1-2-151155215</string>
+    <string name="about_icon_aimp_text">AIMP</string>
+    <string name="about_icon_aimp_html">http://aimp.ru/</string>
+    <string name="about_icon_banshee_text">Banshee</string>
+    <string name="about_icon_banshee_html">http://banshee.fm/</string>
+    <string name="about_icon_bsplayer_text">BSPlayer</string>
+    <string name="about_icon_bsplayer_html">http://www.bsplayer.com/</string>
+    <string name="about_icon_gommediaplayer_text">GOM Media Player</string>
+    <string name="about_icon_gommediaplayer_html">http://player.gomlab.com/eng/download/</string>
+    <string name="about_icon_kmplayer_text">KMPlayer</string>
+    <string name="about_icon_kmplayer_html">http://www.kmplayer.com/</string>
+    <string name="about_icon_mediamonkey_text">MediaMonkey</string>
+    <string name="about_icon_mediamonkey_html">http://www.mediamonkey.com/</string>
+    <string name="about_icon_mediaplayerclassic_text">Media Player Classic - Home Cinema</string>
+    <string name="about_icon_mediaplayerclassic_html">http://sourceforge.net/projects/mpc-hc/</string>
+    <string name="about_icon_rhythmbox_text">Rhythmbox</string>
+    <string name="about_icon_rhythmbox_html">http://projects.gnome.org/rhythmbox/</string>
+    <string name="about_icon_vlc_text">VLC Media Player</string>
+    <string name="about_icon_vlc_html">http://www.videolan.org/vlc/</string>
+    <string name="about_icon_winamp_text">Winamp</string>
+    <string name="about_icon_winamp_html">http://www.winamp.com/</string>
+    <string name="about_icon_wmp_text">Windows Media Player</string>
+    <string name="about_icon_wmp_html">http://windows.microsoft.com/cs-cz/windows/windows-media-player</string>
+    
+    <string name="preferences_category_global_text">Global</string>
+    <string name="preferences_category_mouse_and_keyboard_text">Mouse and keyboard</string>
+    <string name="preferences_category_connection_text">Connection</string>
+    <string name="preferences_item_keyboard_simulation_text">Keyboard simulation</string>
+    <string name="preferences_value_clipboard_simulation_text">Clipboard</string>
+    <string name="preferences_value_clipboard_simulation_summary">Simulate Copy &amp; Paste. It provides writing special characters or characters with diacritical marks.</string>
+    <string name="preferences_value_key_stroke_simulation_text">Key stroke</string>
+    <string name="preferences_value_key_stroke_simulation_summary">Simulate real key sroke. It is only for writing standard characters. Caution, may write wrong characters depends on your keyboard layout.</string>
+    <string name="preferences_item_udp_port_text">UDP port</string>
+    <string name="preferences_item_udp_port_summary">Port using in scan mode.</string>
+    <string name="preferences_item_mouse_wheel_text">Scroll sensitivity</string>
+    <string name="preferences_item_mouse_wheel_summary">With increasing value the scroll sensitivity grows.</string>
+    <string name="preferences_item_keep_wifi_alive_text">Wi-Fi lock</string>
+    <string name="preferences_item_keep_wifi_alive_summary">Keep Wi-Fi enabled when connected.</string>
+    <string name="preferences_item_keep_phone_awake_text">Wake lock</string>
+    <string name="preferences_item_keep_phone_awake_summary">Keep device awake when connected.</string>
+    <string name="preferences_item_orientation_lock_text">Orientation lock</string>
+    <string name="preferences_item_orientation_lock_summary">Set orientation lock.</string>
+    <string name="preferences_value_orientation_default_text">Default</string>
+    <string name="preferences_value_orientation_portrait_text">Portrait</string>
+    <string name="preferences_value_orientation_landscape_text">Landscape</string>
+    <string name="preferences_item_visible_remotes_text">Visible remotes</string>
+    <string name="preferences_item_visible_remotes_summary">Select visible remotes.</string>
+    <string name="preferences_item_notification_text">Notification</string>
+    <string name="preferences_item_notification_summary">Show statusbar notification.</string>
+</resources>

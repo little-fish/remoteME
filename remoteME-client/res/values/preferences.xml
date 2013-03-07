@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <item type="string" name="pref_name_shared_pref_version">SHARED_PREFERENCES_VERSION</item>
+    
+    <item type="string" name="pref_name_udp_scan_mode_port">UDP_SCAN_MODE_PORT</item>
+    
+    <item type="string" name="pref_name_mouse_wheel_smooth">MOUSE_WHEEL_SMOOTH</item>
+    
+    <item type="string" name="pref_name_socket_timeout">SOCKET_TIMEOUT</item>
+    
+    <item type="string" name="pref_name_keep_wifi_alive">KEEP_WIFI_ALIVE</item>
+    
+    <item type="string" name="pref_name_keep_device_awake">KEEP_PHONE_AWAKE</item>
+    
+    <item type="string" name="pref_name_visible_remotes">VISIBLE_REMOTES</item>
+    
+    <item type="string" name="pref_name_show_notification">SHOW_NOTIFICATION</item>
+    
+    <item type="string" name="pref_name_orientation_lock">ORIENTATION_LOCK</item>
+    <item type="string" name="pref_value_default">DEFAULT</item>
+    <item type="string" name="pref_value_portait">PORTRAIT</item>
+    <item type="string" name="pref_value_landscape">LANDSCAPE</item>
+    
+    <item type="string" name="pref_name_server_order">SERVER_ORDER</item>
+    <item type="integer" name="pref_value_order_by_name">1</item>
+    <item type="integer" name="pref_value_order_by_last_connected">2</item>
+    <item type="integer" name="pref_value_order_by_ip_address">3</item>
+    <item type="integer" name="pref_value_order_by_os_type">4</item>
+    
+    <item type="string" name="pref_name_keyboard_simulation">KEYBOARD_SIMULATION</item>
+    <item type="string" name="pref_value_key_stroke">KEY_STROKE</item>
+    <item type="string" name="pref_value_clipboard">CLIPBOARD</item>
+    
+</resources>

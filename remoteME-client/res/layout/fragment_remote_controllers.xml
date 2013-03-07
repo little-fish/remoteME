@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_background" >
+    
+    <TextView
+        android:id="@+id/remote_controllers_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dip"
+        android:paddingBottom="3dip"
+        android:gravity="center"
+        android:text="@string/remote_controllers_title_text"
+        android:textAppearance="@style/ActivityDialogTitle" />
+    
+    <View
+        android:background="#33b5e5" 
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_marginTop="4dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip" />
+    
+    <ListView
+        android:id="@+id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:divider="@drawable/server_row_scan_divider"
+        android:dividerHeight="2dip"
+        android:clickable="true"
+        android:smoothScrollbar="true"
+        android:layout_weight="0.5" >
+    </ListView>
+    
+    <TextView
+        android:id="@id/android:empty"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingTop="12dip"
+        android:paddingBottom="12dip"
+        android:text="@string/remote_controllers_empty_list_text"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="0dip"
+	    android:paddingRight="0dip"
+        android:orientation="horizontal"
+        android:gravity="bottom|center_horizontal"
+        android:weightSum="1" >
+
+        <Button
+            android:id="@+id/remote_controllers_btn_cancel"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_disconnect_text" />
+    </LinearLayout>
+
+</LinearLayout>

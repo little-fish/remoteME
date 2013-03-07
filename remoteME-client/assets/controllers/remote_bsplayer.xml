@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_app_bsplayer</rcId>
+    <rcTitle>BSPlayer</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_bsplayer</rcIcon>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_backward</bIcon>
+	        <bAction>left</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_resize</bIcon>
+	        <bAction>f</bAction>
+        </button>
+	    <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_forward</bIcon>
+	        <bAction>right</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_previous</bIcon>
+	        <bAction>y</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_next</bIcon>
+	        <bAction>b</bAction>
+	    </button>
+	</row>
+	    
+    <row>
+         <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_stop</bIcon>
+	        <bAction>v</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_play_pause</bIcon>
+	        <bAction>space</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_sub_backward</bIcon>
+	        <bAction>shift;-;left</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_sub_disabled</bIcon>
+	        <bAction>s</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_sub_forward</bIcon>
+	        <bAction>shift;-;right</bAction>
+	    </button>
+	</row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_volume_down</bIcon>
+	        <bAction>down</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_volume_disabled</bIcon>
+	        <bAction>ctrl;-;m</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>3acaf5</bBackgroundColor>
+	        <bIcon>control_volume_up</bIcon>
+	        <bAction>up</bAction>
+        </button>
+    </row>
+    
+</remoteController>

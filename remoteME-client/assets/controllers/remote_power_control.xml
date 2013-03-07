@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_power_control</rcId>
+    <rcTitle>string_power_control</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_system</rcIcon>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>962424</bBackgroundColor>
+	        <bTextFirst>string_power_shutdown</bTextFirst>
+	        <bTextFirstSize>20</bTextFirstSize>
+	        <bAction>shutdown</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>962424</bBackgroundColor>
+	        <bTextFirst>string_power_restart</bTextFirst>
+	        <bTextFirstSize>20</bTextFirstSize>
+	        <bAction>restart</bAction>
+	    </button>
+	</row>
+	    
+    <row>
+         <button>
+	        <bBackgroundColor>A6A6A6</bBackgroundColor>
+	        <bTextFirst>string_power_logoff_first</bTextFirst>
+	        <bTextFirstSize>20</bTextFirstSize>
+	        <bTextSecond>string_power_logoff_second</bTextSecond>
+	        <bTextSecondSize>20</bTextSecondSize>
+	        <bAction>logoff</bAction>
+        </button>
+    </row>
+    
+</remoteController>

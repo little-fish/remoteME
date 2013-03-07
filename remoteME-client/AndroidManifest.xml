@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cz.babi.android.remoteme"
+    android:versionCode="1"
+    android:versionName="@string/text_app_version" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="11"
+        android:maxSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    
+    <supports-screens 
+        android:smallScreens="false"
+        />
+
+    <application
+        android:icon="@drawable/app_icon"
+        android:label="@string/text_app_name"
+        android:theme="@style/HoloDarkTheme"
+        android:allowBackup="true" >
+        <activity
+            android:name=".ActivityMain" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="cz.babi.android.remoteme.action.orderserver" />
+            </intent-filter>
+        </activity>
+        <activity 
+            android:label="@string/text_app_name"
+            android:name="cz.babi.android.remoteme.ui.ActivityPreferences"
+            android:theme="@style/HoloDarkTheme" >
+        </activity>
+        <activity 
+            android:label="@string/text_app_name"
+            android:name="cz.babi.android.remoteme.ui.ActivityDialogServerDetails"
+            android:theme="@style/HoloDarkDialogTheme" >
+        </activity>
+        <activity 
+            android:label="@string/text_app_name"
+            android:name="cz.babi.android.remoteme.ui.ActivityDialogServerDelete"
+            android:theme="@style/HoloDarkDialogTheme" >
+        </activity>
+        <activity 
+            android:label="@string/text_app_name"
+            android:name="cz.babi.android.remoteme.ui.ActivityDialogServerSearch"
+            android:theme="@style/HoloDarkDialogTheme" >
+        </activity>
+        <activity 
+            android:label="@string/text_app_name"
+            android:name="cz.babi.android.remoteme.ui.ActivityDialogServerConnect"
+            android:theme="@style/HoloDarkDialogTheme" >
+        </activity>
+        <activity 
+            android:label="@string/text_app_name"
+            android:name="cz.babi.android.remoteme.ui.ActivityDialogNoConnection"
+            android:theme="@style/HoloDarkDialogTheme" >
+        </activity>
+        <activity 
+            android:label="@string/text_app_name"
+            android:name="cz.babi.android.remoteme.ui.ActivityDialogListOfRemoteControllers"
+            android:theme="@style/HoloDarkDialogTheme"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity 
+            android:label="@string/text_app_name"
+            android:name="cz.babi.android.remoteme.ui.ActivityRemoteController"
+            android:theme="@style/HoloDarkTheme" >
+        </activity>
+        <activity 
+            android:label="@string/text_app_name"
+            android:name="cz.babi.android.remoteme.ui.ActivityRemoteMouseAndKeyboard"
+            android:theme="@style/HoloDarkTheme" >
+        </activity>
+        <activity 
+            android:label="@string/text_app_name"
+            android:name="cz.babi.android.remoteme.ui.ActivityAbout"
+            android:theme="@style/HoloDarkTheme" >
+        </activity>
+        
+        <service
+            android:name="cz.babi.android.remoteme.service.ConnectionService"
+        	android:icon="@drawable/app_icon" />
+ 
+        <activity 
+            android:label="@string/text_app_name"
+            android:name=".trash.TestConnectedActivity"
+            android:theme="@style/HoloDarkDialogTheme" >
+        </activity>
+        <activity 
+            android:label="@string/text_app_name"
+            android:name=".trash.TestActivity"
+            android:theme="@style/HoloDarkDialogTheme" >
+        </activity>
+        
+        
+    </application>
+
+</manifest>

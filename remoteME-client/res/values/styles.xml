@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Animations" />
+
+    <!-- PopDownMenu -->
+    <style name="Animations.PopDownMenu" />
+
+    <style name="Animations.PopDownMenu.Center">
+        <item name="@android:windowEnterAnimation">@anim/grow_from_top</item>
+        <item name="@android:windowExitAnimation">@anim/shrink_from_bottom</item>
+    </style>
+
+    <!-- PopUpMenu -->
+    <style name="Animations.PopUpMenu" />
+
+    <style name="Animations.PopUpMenu.Center">
+        <item name="@android:windowEnterAnimation">@anim/grow_from_bottom</item>
+        <item name="@android:windowExitAnimation">@anim/shrink_from_top</item>
+    </style>
+    
+    <style name="ActivityDialogTitle">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">#f7f7f7</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+    </style>
+    
+    <style name="whiteTextColor">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#f7f7f7</item>
+    </style>
+    
+    <style name="whiteBiggerTextColor">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#f7f7f7</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="holoTextColor">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#33b5e5</item>
+    </style>
+    
+    <style name="myBackgroundStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:background">#FF0000</item>
+    </style>
+
+</resources>

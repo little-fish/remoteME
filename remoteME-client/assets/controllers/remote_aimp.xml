@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_app_aimp</rcId>
+    <rcTitle>AIMP</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_aimp</rcIcon>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>383838</bBackgroundColor>
+	        <bIcon>control_backward</bIcon>
+	        <bIconColor>ff9b19</bIconColor>
+	        <bAction>ctrl;-;left</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>383838</bBackgroundColor>
+	        <bIcon>control_maximize</bIcon>
+	        <bIconColor>ff9b19</bIconColor>
+	        <bAction>alt;-;enter</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>383838</bBackgroundColor>
+	        <bIcon>control_forward</bIcon>
+	        <bIconColor>ff9b19</bIconColor>
+	        <bAction>ctrl;-;right</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>383838</bBackgroundColor>
+	        <bIcon>control_previous</bIcon>
+	        <bIconColor>ff9b19</bIconColor>
+	        <bAction>f1</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>383838</bBackgroundColor>
+	        <bIcon>control_play_pause</bIcon>
+	        <bIconColor>ff9b19</bIconColor>
+	        <bAction>space</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>383838</bBackgroundColor>
+	        <bIcon>control_next</bIcon>
+	        <bIconColor>ff9b19</bIconColor>
+	        <bAction>f2</bAction>
+        </button>
+    </row>
+	
+    <row>
+        <button>
+	        <bBackgroundColor>383838</bBackgroundColor>
+	        <bIcon>control_volume_down</bIcon>
+	        <bIconColor>ff9b19</bIconColor>
+	        <bAction>ctrl;-;down</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>383838</bBackgroundColor>
+	        <bIcon>control_volume_disabled</bIcon>
+	        <bIconColor>ff9b19</bIconColor>
+	        <bAction>v</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>383838</bBackgroundColor>
+	        <bIcon>control_volume_up</bIcon>
+	        <bIconColor>ff9b19</bIconColor>
+	        <bAction>ctrl;-;up</bAction>
+        </button>
+    </row>
+    
+</remoteController>

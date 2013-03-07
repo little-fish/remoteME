@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_app_gom_media_player</rcId>
+    <rcTitle>GOM Media Player</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_gom_media_player</rcIcon>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_hide</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>esc</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>d4d4d4</bBackgroundColor>
+	        <bIcon>control_turn_off</bIcon>
+	        <bIconColor></bIconColor>
+	        <bAction>alt;-;f4</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_resize</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>enter</bAction>
+        </button>
+    </row>
+	    
+    <row>
+        <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_previous</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>pageup</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_sub_smaller</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>alt;-;pagedown</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_sub_bigger</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>alt;-;pageup</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_next</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>pagedown</bAction>
+        </button>
+	</row>
+	
+    <row>
+         <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_stop</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>ctrl;-;space</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_play_pause</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>space</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_sub_backward</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>,</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_sub_disabled</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>alt;-;h</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_sub_forward</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>.</bAction>
+	    </button>
+	</row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_volume_down</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>down</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_volume_disabled</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>m</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>ffa02b</bBackgroundColor>
+	        <bIcon>control_volume_up</bIcon>
+	        <bIconColor>3d3d3d</bIconColor>
+	        <bAction>up</bAction>
+        </button>
+    </row>
+    
+</remoteController>

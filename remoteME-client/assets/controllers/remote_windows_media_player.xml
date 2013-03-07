@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_app_windows_media_player</rcId>
+    <rcTitle>Windows Media Player</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_windows_media_player</rcIcon>
+
+    <row>
+        <button>
+	        <bBackgroundColor>e6eff9</bBackgroundColor>
+	        <bIcon>control_previous</bIcon>
+	        <bIconColor>2c69ad</bIconColor>
+	        <bAction>ctrl;-;b</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>e6eff9</bBackgroundColor>
+	        <bIcon>control_resize</bIcon>
+	        <bIconColor>2c69ad</bIconColor>
+	        <bAction>alt;-;enter</bAction>
+        </button>
+	    <button>
+	        <bBackgroundColor>e6eff9</bBackgroundColor>
+	        <bIcon>control_next</bIcon>
+	        <bIconColor>2c69ad</bIconColor>
+	        <bAction>ctrl;-;f</bAction>
+        </button>
+	</row>
+	
+    <row>
+         <button>
+	        <bBackgroundColor>e6eff9</bBackgroundColor>
+	        <bIcon>control_stop</bIcon>
+	        <bIconColor>2c69ad</bIconColor>
+	        <bAction>ctrl;-;s</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>e6eff9</bBackgroundColor>
+	        <bIcon>control_shuffle</bIcon>
+	        <bIconColor>2c69ad</bIconColor>
+	        <bAction>ctrl;-;h</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>e6eff9</bBackgroundColor>
+	        <bIcon>control_play_pause</bIcon>
+	        <bIconColor>2c69ad</bIconColor>
+	        <bAction>ctrl;-;p</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>e6eff9</bBackgroundColor>
+	        <bIcon>control_volume_down</bIcon>
+	        <bIconColor>2c69ad</bIconColor>
+	        <bAction>f8</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>e6eff9</bBackgroundColor>
+	        <bIcon>control_volume_disabled</bIcon>
+	        <bIconColor>2c69ad</bIconColor>
+	        <bAction>f7</bAction>
+        </button>
+	    <button>
+	        <bBackgroundColor>e6eff9</bBackgroundColor>
+	        <bIcon>control_volume_up</bIcon>
+	        <bIconColor>2c69ad</bIconColor>
+	        <bAction>f9</bAction>
+        </button>
+    </row>
+    
+</remoteController>

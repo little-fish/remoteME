@@ -1,0 +1,59 @@
+<cz.babi.android.remoteme.ui.Actionbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/actionbar_home"
+    android:layout_width="fill_parent" 
+	android:layout_height="42dip"
+	android:orientation="horizontal"
+	android:background="@drawable/actionbar_background_repeat" >
+	
+    <ImageView
+        android:id="@+id/actionbar_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical"
+        android:paddingTop="4dip"
+        android:paddingBottom="4dip"
+        android:src="@drawable/app_icon"
+        android:contentDescription="@string/actionbar_icon_app_description"
+        />
+    
+    <ImageButton
+	    android:id="@+id/actionbar_add_new_server"
+	    android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:layout_marginRight="5dip"
+	    android:paddingBottom="-1dip"
+	    android:gravity="center_vertical"
+	    android:layout_alignParentRight="true"
+	    android:src="@drawable/actionbar_button_add_server"
+	    android:contentDescription="@string/actionbar_icon_add_description"
+	    android:background="@null"
+	    />
+	
+	<ImageButton
+	    android:id="@+id/actionbar_order_servers"
+	    android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:layout_marginRight="1dip"
+	    android:paddingBottom="-1dip"
+	    android:gravity="center_vertical"
+	    android:layout_toLeftOf="@id/actionbar_add_new_server"
+	    android:src="@drawable/actionbar_button_order_servers"
+	    android:contentDescription="@string/actionbar_icon_order_description"
+	    android:background="@null"
+	    />
+	
+	<TextView
+	    android:id="@+id/actionbar_title"
+		android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:layout_toRightOf="@id/actionbar_icon"
+	    android:layout_toLeftOf="@id/actionbar_order_servers"
+	    android:paddingLeft="6dip"
+	    android:gravity="center_vertical"
+	    android:textSize="20dip"
+	    android:textStyle="bold"
+	    android:textColor="#ffffff"
+	    android:text="@string/text_app_name"
+	    />
+	
+</cz.babi.android.remoteme.ui.Actionbar>

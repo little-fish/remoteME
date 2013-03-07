@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_app_vlc_custom</rcId>
+    <rcTitle>VLC (Custom)</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_vlc</rcIcon>
+    <rcBackgroundColor>FF428E</rcBackgroundColor>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>57152f</bBackgroundColor>
+	        <bIcon>control_minimize</bIcon>
+	        <bIconColor>0f6108</bIconColor>
+	        <bAction>esc</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>d4d4d4</bBackgroundColor>
+	        <bIcon>control_turn_off</bIcon>
+	        <bAction>ctrl;-;q</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>fff700</bBackgroundColor>
+	        <bIcon>control_maximize</bIcon>
+	        <bIconColor>2bff00</bIconColor>
+	        <bTextFirst>MAX</bTextFirst>
+	        <bTextFirstColor>000000</bTextFirstColor>
+	        <bTextFirstSize>30</bTextFirstSize>
+	        <bAction>f</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>ff00c0</bBackgroundColor>
+	        <bTextFirst>previous</bTextFirst>
+	        <bAction>p</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>00ff2a</bBackgroundColor>
+	        <bIcon>control_shuffle</bIcon>
+	        <bAction>r</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>ffffff</bBackgroundColor>
+	        <bAction>n</bAction>
+	    </button>
+	</row>
+	    
+    <row>
+         <button>
+	        <bBackgroundColor>3600F7</bBackgroundColor>
+	        <bIcon>control_stop</bIcon>
+	        <bIconColor>3CE68B</bIconColor>
+	        <bTextFirst>STOP</bTextFirst>
+	        <bTextFirstColor>ffffff</bTextFirstColor>
+	        <bTextFirstSize>22</bTextFirstSize>
+	        <bAction>s</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>00B7FF</bBackgroundColor>
+	        <bIcon>control_play_pause</bIcon>
+	        <bIconColor>E63CC4</bIconColor>
+	        <bTextFirst>play</bTextFirst>
+	        <bTextFirstColor>E3F700</bTextFirstColor>
+	        <bTextFirstSize>10</bTextFirstSize>
+	        <bTextSecond>PAUSE</bTextSecond>
+	        <bTextSecondColor>41A2A3</bTextSecondColor>
+	        <bTextSecondSize>30</bTextSecondSize>
+	        <bAction>space</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>ff0000</bBackgroundColor>
+	        <bIcon>control_volume_down</bIcon>
+	        <bAction>ctrl;-;down</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>ffffff</bBackgroundColor>
+	        <bIcon>control_volume_disabled</bIcon>
+	        <bIconColor>000000</bIconColor>
+	        <bAction>m</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>000000</bBackgroundColor>
+	        <bIconColor>ffffff</bIconColor>
+	        <bIcon>control_volume_up</bIcon>
+	        <bAction>ctrl;-;up</bAction>
+        </button>
+    </row>
+    
+</remoteController>

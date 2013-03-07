@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- keyboard simulation -->
+    <string-array name="keyboar_simulation_entries">
+	    <item name="clipboar_simulation">@string/preferences_value_clipboard_simulation_text</item>
+	    <item name="key_stroke_simulaion">@string/preferences_value_key_stroke_simulation_text</item>
+	</string-array>
+    <string-array name="keyboar_simulation_values">
+	    <item name="clipboar_simulation">@string/pref_value_clipboard</item>
+	    <item name="key_stroke_simulaion">@string/pref_value_key_stroke</item>
+	</string-array>
+	
+    <!-- orientation -->
+    <string-array name="orientation_entries">
+	    <item name="orientation_default">@string/preferences_value_orientation_default_text</item>
+	    <item name="orientation_portrait">@string/preferences_value_orientation_portrait_text</item>
+	    <item name="orientation_landscape">@string/preferences_value_orientation_landscape_text</item>
+	</string-array>
+    <string-array name="orientation_values">
+	    <item name="orientation_default">@string/pref_value_default</item>
+	    <item name="orientation_portrait">@string/pref_value_portait</item>
+	    <item name="orientation_landscape">@string/pref_value_landscape</item>
+	</string-array>
+	
+    <!-- default visible remotes -->
+    <string-array name="default_visible_remotes_values">
+        <item>id_mouse_and_keyboard</item>
+	    <item>id_power_control</item>
+	    <item>id_app_vlc</item>
+	    <item>id_app_banshee</item>
+	    <item>id_app_rhythmbox</item>
+	    <item>id_app_aimp</item>
+	    <item>id_app_bsplayer</item>
+	    <item>id_app_gom_media_player</item>
+	    <item>id_app_media_player_classic</item>
+	    <item>id_app_winamp</item>
+	    <item>id_app_mediamonkey</item>
+	    <item>id_app_windows_media_player</item>
+	    <item>id_app_kmplayer</item>
+	    <item>id_presentation</item>
+	</string-array>
+
+</resources>

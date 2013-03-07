@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="HoloDarkTheme" parent="@android:style/Theme.Holo.NoActionBar">
+
+    <!-- Any customizations for your app running on devices with Theme.Holo here -->
+
+  </style>
+
+</resources>

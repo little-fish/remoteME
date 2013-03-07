@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="HoloDarkDialogTheme" parent="@android:style/Theme.Dialog">
+      
+    <item name="android:windowNoTitle">true</item>
+
+	<item name="android:editTextStyle">@style/EditTextHoloDarkTheme</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewHoloDarkTheme</item>
+
+    <item name="android:checkboxStyle">@style/CheckBoxHoloDarkTheme</item>
+
+    <item name="android:radioButtonStyle">@style/RadioButtonHoloDarkTheme</item>
+
+    <item name="android:buttonStyle">@style/ButtonHoloDarkTheme</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonHoloDarkTheme</item>
+
+    <item name="android:spinnerStyle">@style/SpinnerHoloDarkTheme</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerHoloDarkTheme.DropDown</item>
+
+    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemHoloDarkTheme</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarHoloDarkTheme</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarHoloDarkTheme</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleHoloDarkTheme</item>
+
+    <item name="android:listViewStyle">@style/ListViewHoloDarkTheme</item>
+
+    <item name="android:listViewWhiteStyle">@style/ListViewHoloDarkTheme.White</item>
+
+    <item name="android:spinnerItemStyle">@style/SpinnerItemHoloDarkTheme</item>
+
+  </style>
+
+</resources>

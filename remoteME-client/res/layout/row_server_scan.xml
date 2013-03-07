@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip"
+    android:background="@drawable/server_row_scan_background_selector" >
+
+    <LinearLayout
+        android:id="@+id/scan_server_os_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:paddingBottom="6dip"
+        android:paddingLeft="2dip"
+        android:paddingRight="4dip"
+        android:paddingTop="6dip" >
+
+        <ImageView
+            android:id="@+id/scan_serverrow_icon_os_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dip"
+            android:contentDescription="@string/serverrow_icon_os_type_description"
+            android:src="@drawable/os_tux" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/scan_server_os_type"
+        android:layout_alignTop="@+id/scan_server_os_type"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="-4dip"
+        android:layout_toRightOf="@+id/scan_server_os_type"
+        android:orientation="vertical"
+        android:paddingLeft="5dip" >
+
+        <TextView
+            android:id="@+id/scan_serverrow_text_server_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/scan_serverrow_text_server_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#cfcfcf"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            android:textIsSelectable="false" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/scan_serverrow_icon_exists"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/serverrow_icon_in_db_description"
+        android:src="@drawable/ic_cab_done_holo_dark" />
+    
+</RelativeLayout>

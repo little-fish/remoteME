@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+     
+    <PreferenceCategory 
+        android:title="@string/preferences_category_global_text" >
+        
+        <CheckBoxPreference
+            android:key="@string/pref_name_keep_wifi_alive"
+        	android:title="@string/preferences_item_keep_wifi_alive_text"
+        	android:summary="@string/preferences_item_keep_wifi_alive_summary"
+        	android:defaultValue="true"
+            />
+        
+        <CheckBoxPreference
+            android:key="@string/pref_name_keep_device_awake"
+        	android:title="@string/preferences_item_keep_phone_awake_text"
+        	android:summary="@string/preferences_item_keep_phone_awake_summary"
+        	android:defaultValue="true"
+            />
+        
+        <ListPreference
+            android:key="@string/pref_name_orientation_lock"
+        	android:title="@string/preferences_item_orientation_lock_text"
+        	android:summary="@string/preferences_item_orientation_lock_summary"
+	        android:entries="@array/orientation_entries"
+            android:entryValues="@array/orientation_values"
+            android:defaultValue="@string/pref_value_default"
+            />
+        
+        <CheckBoxPreference
+            android:key="@string/pref_name_show_notification"
+        	android:title="@string/preferences_item_notification_text"
+        	android:summary="@string/preferences_item_notification_summary"
+        	android:defaultValue="true"
+            />
+        
+        <cz.babi.android.remoteme.ui.MultiSelectListPreference
+        	android:key="@string/pref_name_visible_remotes"
+        	android:persistent="true"
+        	android:title="@string/preferences_item_visible_remotes_text"
+        	android:summary="@string/preferences_item_visible_remotes_summary"
+            />
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="@string/preferences_category_connection_text" >
+        
+        <EditTextPreference 
+            android:title="@string/preferences_item_udp_port_text"
+            android:dialogTitle="@string/preferences_item_udp_port_text"
+            android:key="@string/pref_name_udp_scan_mode_port"
+            android:numeric="integer"
+            android:maxLength="5"
+            android:defaultValue="4449"
+            />
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+        android:title="@string/preferences_category_mouse_and_keyboard_text" >
+        
+        <ListPreference
+            android:title="@string/preferences_item_keyboard_simulation_text"
+            android:dialogTitle="@string/preferences_item_keyboard_simulation_text"
+            android:key="@string/pref_name_keyboard_simulation"
+            android:entries="@array/keyboar_simulation_entries"
+            android:entryValues="@array/keyboar_simulation_values"
+            android:defaultValue="@string/pref_value_clipboard"
+            />
+        
+        <cz.babi.android.remoteme.ui.SeekBarPreference
+            android:title="@string/preferences_item_mouse_wheel_text"
+            android:dialogTitle="@string/preferences_item_mouse_wheel_text"
+            android:key="@string/pref_name_mouse_wheel_smooth"
+            />
+        
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_app_media_player_classic</rcId>
+    <rcTitle>Media Player Classic</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_media_player_classic</rcIcon>
+	    
+    <row>
+        <button>
+	        <bBackgroundColor>e14f01</bBackgroundColor>
+	        <bIcon>control_previous</bIcon>
+	        <bAction>pageup</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>d4d4d4</bBackgroundColor>
+	        <bIcon>control_turn_off</bIcon>
+	        <bIconColor></bIconColor>
+	        <bAction>alt;-;x</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>16a303</bBackgroundColor>
+	        <bIcon>control_next</bIcon>
+	        <bAction>pagedown</bAction>
+        </button>
+	</row>
+	
+    <row>
+         <button>
+	        <bBackgroundColor>e14f01</bBackgroundColor>
+	        <bIcon>control_stop</bIcon>
+	        <bAction>.</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>3989e5</bBackgroundColor>
+	        <bIcon>control_resize</bIcon>
+	        <bAction>ctrl;-;enter</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>16a303</bBackgroundColor>
+	        <bIcon>control_play_pause</bIcon>
+	        <bAction>space</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>e14f01</bBackgroundColor>
+	        <bIcon>control_sub_backward</bIcon>
+	        <bIconColor>303133</bIconColor>
+	        <bAction>f2</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>3989e5</bBackgroundColor>
+	        <bIcon>control_sub_disabled</bIcon>
+	        <bIconColor>303133</bIconColor>
+	        <bAction>w</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>16a303</bBackgroundColor>
+	        <bIcon>control_sub_forward</bIcon>
+	        <bIconColor>303133</bIconColor>
+	        <bAction>f1</bAction>
+	    </button>
+	</row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>e14f01</bBackgroundColor>
+	        <bIcon>control_volume_down</bIcon>
+	        <bAction>down</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>3989e5</bBackgroundColor>
+	        <bIcon>control_volume_disabled</bIcon>
+	        <bAction>ctrl;-;m</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>16a303</bBackgroundColor>
+	        <bIcon>control_volume_up</bIcon>
+	        <bAction>up</bAction>
+        </button>
+    </row>
+    
+</remoteController>

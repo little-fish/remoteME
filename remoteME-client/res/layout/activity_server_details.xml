@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="295dip"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_background" >
+    
+    <TextView
+        android:id="@+id/server_details_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dip"
+        android:paddingBottom="3dip"
+        android:gravity="center"
+        android:textAppearance="@style/ActivityDialogTitle" />
+    
+    <View
+        android:background="#33b5e5" 
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_marginTop="4dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="54dip" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip" 
+            android:paddingTop="5dip" 
+            android:paddingBottom="5dip" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dip"
+                android:textAppearance="@style/whiteTextColor"
+                android:text="@string/server_details_server_name_text" />
+
+            <EditText
+                android:id="@+id/server_details_server_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dip"
+                android:inputType="text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dip"
+                android:textAppearance="@style/whiteTextColor"
+                android:text="@string/server_details_server_ipAddress_text" />
+
+            <EditText
+                android:id="@+id/server_details_ipAddress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dip"
+                android:inputType="number|text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dip"
+                android:textAppearance="@style/whiteTextColor"
+                android:text="@string/server_details_server_port_text" />
+
+            <EditText
+                android:id="@+id/server_details_port"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dip"
+                android:hint="@string/server_details_server_port_hint"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dip"
+                android:textAppearance="@style/whiteTextColor"
+                android:text="@string/server_details_server_password_text" />
+
+            <EditText
+                android:id="@+id/server_details_password"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dip"
+                android:hint="@string/server_details_server_password_hint"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dip"
+                android:textAppearance="@style/whiteTextColor"
+                android:text="@string/server_details_server_os_type_text" />
+
+            <RadioGroup
+                android:id="@+id/server_details_rbtng_os_type"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/server_details_os_unix"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/server_details_rbtn_os_unix"
+                    android:textAppearance="@style/holoTextColor" />
+
+                <RadioButton
+                    android:id="@+id/server_details_os_mac"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/server_details_rbtn_os_mac"
+                    android:textAppearance="@style/holoTextColor" />
+
+                <RadioButton
+                    android:id="@+id/server_details_os_windows"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/server_details_rbtn_os_windows" 
+                    android:textAppearance="@style/holoTextColor" />
+            </RadioGroup>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-50dip"
+        android:paddingLeft="0dip"
+	    android:paddingRight="0dip"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:weightSum="1" >
+
+        <Button
+            android:id="@+id/server_details_btn_ok"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/button_ok_text" />
+
+        <Button
+            android:id="@+id/server_details_btn_cancel"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/button_cancel_text" />
+    </LinearLayout>
+
+</LinearLayout>

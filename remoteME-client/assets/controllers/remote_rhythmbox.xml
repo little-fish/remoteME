@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_app_rhythmbox</rcId>
+    <rcTitle>Rhythmbox</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_rhythmbox</rcIcon>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>3b76b4</bBackgroundColor>
+	        <bIcon>control_minimize</bIcon>
+	        <bAction>ctrl;-;d</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>d9d9d9</bBackgroundColor>
+	        <bIcon>control_turn_off</bIcon>
+	        <bAction>ctrl;-;q</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>3b76b4</bBackgroundColor>
+	        <bIcon>control_maximize</bIcon>
+	        <bAction>ctrl;-;d</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>3b76b4</bBackgroundColor>
+	        <bIcon>control_previous</bIcon>
+	        <bAction>alt;-;left</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>3b76b4</bBackgroundColor>
+	        <bIcon>control_play_pause</bIcon>
+	        <bAction>space</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>3b76b4</bBackgroundColor>
+	        <bIcon>control_next</bIcon>
+	        <bAction>alt;-;right</bAction>
+	    </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>3b76b4</bBackgroundColor>
+	        <bIcon>control_repeat</bIcon>
+	        <bAction>ctrl;-;r</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>3b76b4</bBackgroundColor>
+	        <bIcon>control_hide</bIcon>
+	        <bAction>ctrl;-;w</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>3b76b4</bBackgroundColor>
+	        <bIcon>control_shuffle</bIcon>
+	        <bAction>ctrl;-;u</bAction>
+	    </button>
+	</row>
+    
+</remoteController>

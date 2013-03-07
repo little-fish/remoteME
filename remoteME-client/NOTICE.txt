@@ -1,0 +1,40 @@
+
+
+	********* Used content *********
+
+NewQuickAction3D
+  https://github.com/lorensiuswlt/NewQuickAction3D
+MultiSelectListPreference
+  https://gist.github.com/cardil/4754571
+Abstract background
+  http://www.sosatko.cz/tapety-na-plochu/detail-tapety/21626.htm
+
+
+	********* Used icons *********
+
+Web0.2ama
+  http://chrfb.deviantart.com/art/Web0-2ama-165156124
+Meliae SVG Icon Theme v. 1.2
+  http://sora-meliae.deviantart.com/art/Meliae-SVG-Icon-Theme-v-1-2-151155215
+AIMP
+  http://aimp.ru/
+Banshee
+  http://banshee.fm/
+BSPlayer
+  http://www.bsplayer.com/
+GOM Media Player
+  http://player.gomlab.com/eng/download/
+KMPlayer
+  http://www.kmplayer.com/
+MediaMonkey
+  http://www.mediamonkey.com/
+Media Player Classic - Home Cinema
+  http://sourceforge.net/projects/mpc-hc/
+Rhythmbox
+  http://projects.gnome.org/rhythmbox/
+VLC Media Player
+  http://www.videolan.org/vlc/
+Winamp
+  http://www.winamp.com/
+Windows Media Player
+  http://windows.microsoft.com/cs-cz/windows/windows-media-player

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip"
+    android:background="@drawable/server_row_scan_background_selector" >
+
+    <LinearLayout
+        android:id="@+id/remote_controller_icon_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:paddingBottom="3dip"
+        android:paddingLeft="3dip"
+        android:paddingRight="3dip"
+        android:paddingTop="3dip" >
+
+        <ImageView
+            android:id="@+id/remote_controller_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/remote_controller_icon_description" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/remote_controller_icon_layout"
+        android:orientation="vertical"
+        android:layout_marginLeft="7dip"
+        android:paddingBottom="3dip" >
+
+        <TextView
+            android:id="@+id/remote_controller_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/remote_controller_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#cfcfcf"
+            android:textSize="13sp"
+            android:textStyle="normal"
+            android:textIsSelectable="false" />
+    </LinearLayout>
+
+</RelativeLayout>

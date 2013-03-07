@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_app_mediamonkey</rcId>
+    <rcTitle>MediaMonkey</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_mediamonkey</rcIcon>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>515152</bBackgroundColor>
+	        <bIcon>control_backward</bIcon>
+	        <bIconColor>fec639</bIconColor>
+	        <bAction>shift;-;ctrl;-;b</bAction>
+        </button>
+	    <button>
+	        <bBackgroundColor>515152</bBackgroundColor>
+	        <bIcon>control_forward</bIcon>
+	        <bIconColor>fec639</bIconColor>
+	        <bAction>shift;-;ctrl;-;n</bAction>
+        </button>
+    </row>
+	    
+    <row>
+        <button>
+	        <bBackgroundColor>515152</bBackgroundColor>
+	        <bIcon>control_previous</bIcon>
+	        <bIconColor>fec639</bIconColor>
+	        <bAction>ctrl;-;b</bAction>
+        </button>
+	    <button>
+	        <bBackgroundColor>515152</bBackgroundColor>
+	        <bIcon>control_next</bIcon>
+	        <bIconColor>fec639</bIconColor>
+	        <bAction>ctrl;-;n</bAction>
+        </button>
+	</row>
+	
+    <row>
+         <button>
+	        <bBackgroundColor>515152</bBackgroundColor>
+	        <bIcon>control_stop</bIcon>
+	        <bIconColor>fec639</bIconColor>
+	        <bAction>ctrl;-;o</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>515152</bBackgroundColor>
+	        <bIcon>control_play_pause</bIcon>
+	        <bIconColor>fec639</bIconColor>
+	        <bAction>ctrl;-;p</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>515152</bBackgroundColor>
+	        <bIcon>control_volume_down</bIcon>
+	        <bIconColor>fec639</bIconColor>
+	        <bAction>ctrl;-;alt;-;down</bAction>
+        </button>
+	    <button>
+	        <bBackgroundColor>515152</bBackgroundColor>
+	        <bIcon>control_volume_up</bIcon>
+	        <bIconColor>fec639</bIconColor>
+	        <bAction>ctrl;-;alt;-;up</bAction>
+        </button>
+    </row>
+    
+</remoteController>

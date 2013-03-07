@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="295dip"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+    <fragment
+        android:id="@+id/fragment_server_connect"
+        class="cz.babi.android.remoteme.ui.ActivityDialogServerConnect$ConnectionFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:minWidth="295dip" />
+
+</LinearLayout>

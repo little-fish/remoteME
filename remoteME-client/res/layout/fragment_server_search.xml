@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_background" >
+    
+    <TextView
+        android:id="@+id/server_search_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dip"
+        android:paddingBottom="3dip"
+        android:gravity="center"
+        android:textAppearance="@style/ActivityDialogTitle" />
+    
+    <View
+        android:background="#33b5e5" 
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_marginTop="4dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip" />
+    
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/search_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:orientation="vertical"
+        android:gravity="center_vertical" >
+
+        <ProgressBar
+        	android:id="@+id/server_search_progress_bar"
+        	style="?android:attr/progressBarStyleHorizontal"
+        	android:layout_height="wrap_content"
+        	android:layout_width="fill_parent"
+        	android:indeterminateOnly="true"
+        	android:paddingTop="5dip"
+        	android:paddingRight="10dip"
+        	android:paddingLeft="10dip"
+        	android:visibility="gone" />
+
+        <TextView
+        	android:id="@+id/android:empty"
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_marginLeft="10dip"
+        	android:layout_marginRight="10dip"
+        	android:gravity="center_vertical|center_horizontal"
+        	android:text="@string/activity_main_empty_server_list_text"
+        	android:textColor="#ffffff" />
+    </LinearLayout>
+    
+    <ListView
+        android:id="@+id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/server_row_scan_divider"
+        android:dividerHeight="2dip"
+        android:clickable="true" >
+    </ListView>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="0dip"
+	    android:paddingRight="0dip"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:weightSum="1" >
+
+        <Button
+            android:id="@+id/server_search_btn_repeat"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/button_scan_text" />
+
+        <Button
+            android:id="@+id/server_search_btn_cancel"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/button_cancel_text" />
+    </LinearLayout>
+
+</LinearLayout>

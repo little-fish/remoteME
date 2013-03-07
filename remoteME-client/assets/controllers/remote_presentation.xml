@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_presentation</rcId>
+    <rcTitle>string_presentation</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_presentation</rcIcon>
+
+    <row>
+        <button>
+	        <bBackgroundColor>E35A24</bBackgroundColor>
+	        <bTextFirst>string_presentation_stop</bTextFirst>
+	        <bTextFirstSize>25</bTextFirstSize>
+	        <bTextSecond>string_presentation_second</bTextSecond>
+	        <bTextSecondSize>20</bTextSecondSize>
+	        <bAction>esc</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>E35A24</bBackgroundColor>
+	        <bTextFirst>string_presentation_start</bTextFirst>
+	        <bTextFirstSize>25</bTextFirstSize>
+	        <bTextSecond>string_presentation_second</bTextSecond>
+	        <bTextSecondSize>20</bTextSecondSize>
+	        <bAction>f5</bAction>
+	    </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>E35A24</bBackgroundColor>
+	        <bIcon>control_left</bIcon>
+	        <bAction>left</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>E35A24</bBackgroundColor>
+	        <bIcon>control_right</bIcon>
+	        <bAction>right</bAction>
+	    </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>E35A24</bBackgroundColor>
+	        <bTextFirst>string_presentation_black</bTextFirst>
+	        <bTextFirstSize>25</bTextFirstSize>
+	        <bTextSecond>string_presentation_slide</bTextSecond>
+	        <bTextSecondSize>20</bTextSecondSize>
+	        <bAction>b</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>E35A24</bBackgroundColor>
+	        <bTextFirst>string_presentation_white</bTextFirst>
+	        <bTextFirstSize>25</bTextFirstSize>
+	        <bTextSecond>string_presentation_slide</bTextSecond>
+	        <bTextSecondSize>20</bTextSecondSize>
+	        <bAction>w</bAction>
+	    </button>
+    </row>
+    
+</remoteController>

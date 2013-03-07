@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_app_winamp</rcId>
+    <rcTitle>Winamp</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_winamp</rcIcon>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>282d30</bBackgroundColor>
+	        <bIcon>control_backward</bIcon>
+	        <bIconColor>a6c8d3</bIconColor>
+	        <bAction>ctrl;-;alt;-;left</bAction>
+        </button>
+	    <button>
+	        <bBackgroundColor>282d30</bBackgroundColor>
+	        <bIcon>control_forward</bIcon>
+	        <bIconColor>a6c8d3</bIconColor>
+	        <bAction>ctrl;-;alt;-;right</bAction>
+        </button>
+    </row>
+	    
+    <row>
+        <button>
+	        <bBackgroundColor>282d30</bBackgroundColor>
+	        <bIcon>control_previous</bIcon>
+	        <bIconColor>a6c8d3</bIconColor>
+	        <bAction>ctrl;-;alt;-;pageup</bAction>
+        </button>
+	    <button>
+	        <bBackgroundColor>282d30</bBackgroundColor>
+	        <bIcon>control_next</bIcon>
+	        <bIconColor>a6c8d3</bIconColor>
+	        <bAction>ctrl;-;alt;-;pagedown</bAction>
+        </button>
+	</row>
+	
+    <row>
+         <button>
+	        <bBackgroundColor>282d30</bBackgroundColor>
+	        <bIcon>control_stop</bIcon>
+	        <bIconColor>a6c8d3</bIconColor>
+	        <bAction>ctrl;-;alt;-;end</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>282d30</bBackgroundColor>
+	        <bIcon>control_pause</bIcon>
+	        <bIconColor>a6c8d3</bIconColor>
+	        <bAction>ctrl;-;alt;-;home</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>282d30</bBackgroundColor>
+	        <bIcon>control_play</bIcon>
+	        <bIconColor>a6c8d3</bIconColor>
+	        <bAction>ctrl;-;alt;-;insert</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>282d30</bBackgroundColor>
+	        <bIcon>control_volume_down</bIcon>
+	        <bIconColor>a6c8d3</bIconColor>
+	        <bAction>ctrl;-;alt;-;down</bAction>
+        </button>
+	    <button>
+	        <bBackgroundColor>282d30</bBackgroundColor>
+	        <bIcon>control_volume_up</bIcon>
+	        <bIconColor>a6c8d3</bIconColor>
+	        <bAction>ctrl;-;alt;-;up</bAction>
+        </button>
+    </row>
+    
+</remoteController>

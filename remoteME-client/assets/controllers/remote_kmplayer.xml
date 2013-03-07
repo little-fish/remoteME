@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remoteController>
+    <rcId>id_app_kmplayer</rcId>
+    <rcTitle>KMPlayer</rcTitle>
+    <rcAuthor>babi</rcAuthor>
+    <rcIcon>app_kmplayer</rcIcon>
+    
+    <row>
+        
+        <button>
+	        <bBackgroundColor>d4d4d4</bBackgroundColor>
+	        <bIcon>control_turn_off</bIcon>
+	        <bIconColor></bIconColor>
+	        <bAction>alt;-;f4</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_resize</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>enter</bAction>
+        </button>
+    </row>
+	    
+    <row>
+        <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_previous</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>pageup</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_backward</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>left</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_forward</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>right</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_next</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>pagedown</bAction>
+        </button>
+	</row>
+	
+    <row>
+         <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_stop</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>ctrl;-;z</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_play_pause</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>space</bAction>
+        </button>
+    </row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_sub_smaller</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>alt;-;f2</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_sub_disabled</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>alt;-;x</bAction>
+	    </button>
+        <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_sub_bigger</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>alt;-;f1</bAction>
+	    </button>
+	</row>
+    
+    <row>
+        <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_volume_down</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>down</bAction>
+        </button>
+        <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_volume_disabled</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>m</bAction>
+	    </button>
+	    <button>
+	        <bBackgroundColor>2c2c31</bBackgroundColor>
+	        <bIcon>control_volume_up</bIcon>
+	        <bIconColor>aea1c3</bIconColor>
+	        <bAction>up</bAction>
+        </button>
+    </row>
+    
+</remoteController>
