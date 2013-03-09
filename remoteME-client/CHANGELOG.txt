@@ -1,0 +1,11 @@
+ ***  remoteME - client  ***
+
++ Add
+- Remove
+* Fix
+------------------------------
+
+1.0.1
+ * On some devices scan mod did not work properly.
+
+1.0.0 - Major release.

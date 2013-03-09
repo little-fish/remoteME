@@ -25,7 +25,10 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiManager;
+import android.net.wifi.WifiManager.MulticastLock;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -50,6 +53,9 @@ public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
 	private SearchingFragment parentFragment = null;
 	
 	private MulticastSocket multicastSocket = null;
+	
+	private WifiManager wifiManager;
+	private MulticastLock wifiMulticastLock;
 	
 	private boolean stoppedByUser = false;
 	
@@ -107,6 +113,12 @@ public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
 	 */
 	private ArrayList<Server> findServers() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Start scaning...]");
+		
+		/* On some devices scan mod not work properly. By locking multicast we are able
+		 * to fix it. */
+		wifiManager = (WifiManager)parentFragment.getActivity().getSystemService(Context.WIFI_SERVICE);
+		wifiMulticastLock = wifiManager.createMulticastLock("multicastLock");
+		wifiMulticastLock.acquire();
 		
 		try {
 			multicastSocket = new MulticastSocket(port);
@@ -195,7 +207,7 @@ public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
 			try {
 				multicastSocket.receive(responseDatagramPacket);
 			} catch (IOException ioe) {
-				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][An error occurred during receiving an udp datagram. " +
+				if(Common.ERROR) Log.e(TAG_CLASS_NAME, "[findServers][An error occurred during receiving an udp datagram. " +
 						"Probably timeout was reached or user canceled the task.]");
 				break;
 			}
@@ -248,6 +260,11 @@ public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
 		}
 		
 		if(multicastSocket.isConnected()) multicastSocket.close();
+		
+		if(wifiMulticastLock!=null && wifiMulticastLock.isHeld()) {
+			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Release multicast lock.]");
+			wifiMulticastLock.release();
+		}
 		
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][End of task. Bye bey.]");
 		
