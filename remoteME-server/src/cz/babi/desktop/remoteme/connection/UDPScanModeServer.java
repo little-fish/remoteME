@@ -169,8 +169,7 @@ public class UDPScanModeServer implements Runnable, DefaultServer {
 				multicastSocket.receive(requestDatagramPacket);
 			} catch (IOException ioe) {
 				if(Common.ERROR) LOGGER.error("[waitForConnection][An error occurred during " +
-						"receiving an udp datagram.]", ioe);
-				stopServer();
+						"receiving an udp datagram.]");
 				return;
 			}
 			
@@ -265,10 +264,10 @@ public class UDPScanModeServer implements Runnable, DefaultServer {
 				}
 				
 				multicastSocket.close();
+				
+				if(Common.DEBUG) LOGGER.debug("[stopServer][Server is off.]");
 			}
 		}
-		
-		if(Common.DEBUG) LOGGER.debug("[stopServer][Server is off.]");
 	}
 	
 	/**

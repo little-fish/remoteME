@@ -102,8 +102,7 @@ public class TCPClientServer extends Observable implements Runnable, DefaultServ
 				clientSocket = serverSocket.accept();
 			} catch(IOException ioe) {
 				if(Common.ERROR) LOGGER.error("[waitForConnection][An error occurred during " +
-						"receiving an tcp packet.]", ioe);
-				stopServer();
+						"receiving an tcp packet.]");
 				return;
 			}
 			
@@ -131,6 +130,8 @@ public class TCPClientServer extends Observable implements Runnable, DefaultServ
 			} catch(IOException ioe) {
 				if(Common.ERROR) LOGGER.error("[stopServer][Can not close ServerSocket.]", ioe);
 			}
+			
+			if(Common.DEBUG) LOGGER.debug("[stopServer][Server is off.]");
 		}
 	}
 	

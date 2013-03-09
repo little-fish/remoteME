@@ -97,7 +97,7 @@ public class Common {
 	public static int displayHeight = -1;
 	
 	/* For programatically set logging on/off */
-	public static int LOGLEVEL = 0;
+	public static int LOGLEVEL = 3;
 	public static boolean ERROR = LOGLEVEL > 2;
 	public static boolean WARN = LOGLEVEL > 1;
 	public static boolean DEBUG = LOGLEVEL > 0;

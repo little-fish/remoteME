@@ -195,39 +195,41 @@ public class ConnectionService extends Service {
 	private void showNotification() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[showNotification]");
 		
-		/* Set notification ifon. */
-		int iconResource = R.drawable.os_tux;
-		if(server.getOsName().toLowerCase().indexOf("mac")!=-1)
-			iconResource = R.drawable.os_mac;
-		else if(server.getOsName().toLowerCase().indexOf("win")!=-1)
-			iconResource = R.drawable.os_win;
-		
-		Bitmap icon = BitmapFactory.decodeResource(getResources(), iconResource);
-		
-		notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this).
-				setSmallIcon(R.drawable.app_icon_status_bar).
-				setLargeIcon(icon).
-				setContentTitle(getText(R.string.text_connected)).
-				setContentText(Common.getProperIpAddress(server.getIpAddress()) + ":" +
-						server.getPort()).
-						setTicker(getText(R.string.text_connected) + " " + getText(R.string.text_to) +
-								" " + Common.getProperIpAddress(server.getIpAddress()) + ":" +
-								server.getPort());
-		
-		Intent resultIntent = new Intent(this, ActivityDialogListOfRemoteControllers.class);
-		
-		PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 1,
-				resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-		
-		notificationBuilder.setContentIntent(resultPendingIntent);
-		
-		/* Prevent before closing by user. */
-		notificationBuilder.setOngoing(true);
-		
-		notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
-		
-		isNotificationVisible = true;
+		if(server!=null) {
+			/* Set notification ifon. */
+			int iconResource = R.drawable.os_tux;
+			if(server.getOsName().toLowerCase().indexOf("mac")!=-1)
+				iconResource = R.drawable.os_mac;
+			else if(server.getOsName().toLowerCase().indexOf("win")!=-1)
+				iconResource = R.drawable.os_win;
+			
+			Bitmap icon = BitmapFactory.decodeResource(getResources(), iconResource);
+			
+			notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this).
+					setSmallIcon(R.drawable.app_icon_status_bar).
+					setLargeIcon(icon).
+					setContentTitle(getText(R.string.text_connected)).
+					setContentText(Common.getProperIpAddress(server.getIpAddress()) + ":" +
+							server.getPort()).
+							setTicker(getText(R.string.text_connected) + " " + getText(R.string.text_to) +
+									" " + Common.getProperIpAddress(server.getIpAddress()) + ":" +
+									server.getPort());
+			
+			Intent resultIntent = new Intent(this, ActivityDialogListOfRemoteControllers.class);
+			
+			PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 1,
+					resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			
+			notificationBuilder.setContentIntent(resultPendingIntent);
+			
+			/* Prevent before closing by user. */
+			notificationBuilder.setOngoing(true);
+			
+			notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
+			
+			isNotificationVisible = true;
+		}
 	}
 	
 	/**

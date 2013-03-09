@@ -41,7 +41,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -75,6 +75,8 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 	private boolean isClipboarSelected;
 	
 	private boolean isServiceBound = false;
+	
+	private boolean showAndHideKeyboard;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +164,24 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 		setOrientation(preferences);
 	}
 	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onKeyDown]");
+		
+		if(keyCode==KeyEvent.KEYCODE_MENU) {
+			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onKeyDown][Menu pressed.]");
+			
+			showOrHideKeyboard();
+			
+			editText.requestFocus();
+			editText.setSelection(editText.getText().length());
+			
+			return true;
+		}
+		
+		return super.onKeyDown(keyCode, event);
+	}
+	
 	/**
 	 * Bind service.
 	 */
@@ -199,6 +219,23 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 		super.onDestroy();
 	}
 	
+	private void showOrHideKeyboard() {
+		InputMethodManager inputMethodManager = (InputMethodManager)
+				getSystemService(Context.INPUT_METHOD_SERVICE);
+		
+		if(showAndHideKeyboard) {
+			inputMethodManager.toggleSoftInput(
+					InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+			
+			showAndHideKeyboard = false;
+		} else {
+			inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,
+					InputMethodManager.HIDE_IMPLICIT_ONLY);
+			
+			showAndHideKeyboard = true;
+		}
+	}
+	
 	/**
 	 * Close activity
 	 */
@@ -230,7 +267,7 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 	 * @author dev.misiarz@gmail.com
 	 * @author johncarl
 	 */
-	private class DrawView extends View implements OnGestureListener {
+	private class DrawView extends View {
 		
 		private final String TAG_CLASS_NAME = DrawView.class.getSimpleName();
 		
@@ -243,8 +280,6 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 		
 		private GestureDetector gestureDetector;
 		
-		private boolean showAndHideKeyboard;
-		
 		float mouseWheelSmooth;
 		
 		private final int backgroundColor = Color.WHITE;
@@ -253,6 +288,105 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 		
 		private final int textSpaceLine;
 		private final int textYPosition;
+		
+		private GestureDetector.SimpleOnGestureListener simpleOnGestureListener =
+				new GestureDetector.SimpleOnGestureListener() {
+			
+			@Override
+			public boolean onDown(MotionEvent e) {
+				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onDown]");
+				
+				linePoints.clear();
+				
+				invalidate();
+				
+				PointF point = new PointF();
+				point.x = e.getX();
+				point.y = e.getY();
+				
+				linePoints.add(point);
+				
+				return true;
+			}
+			
+			@Override
+			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+					float velocityY) {
+				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onFling]");
+				
+				return true;
+			}
+			
+			@Override
+			public void onLongPress(MotionEvent e) {
+				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onLongPress]");
+				
+				if(!connectionService.mouseRightClick()) doFinish();
+				
+				invalidate();
+			}
+			
+			@Override
+			public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+					float distanceY) {
+				
+				/* For scrolling efect we need to catch up two or more finger movement. */
+				if(e2.getPointerCount()==1) {
+					if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onScroll][Mooving.][distance X: " + distanceX + "][distance Y: " + distanceY + "]");
+					if(!connectionService.moveMouse(distanceX, distanceY)) doFinish();
+					
+					if(linePoints.size()>50) linePoints.remove(0);
+					
+					PointF point = new PointF();
+					
+					point.x = e2.getX();
+					point.y = e2.getY();
+					
+					linePoints.add(point);
+					
+					invalidate();
+				} else if(e2.getPointerCount()==2) {
+					float finalDistanceY = distanceY*mouseWheelSmooth;
+					
+					if(distanceY>0) {
+						if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onScroll][Scrolling up.]");
+						if(!connectionService.mouseWheel(finalDistanceY)) doFinish();
+					} else {
+						if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onScroll][Scrolling down.]");
+						if(!connectionService.mouseWheel(finalDistanceY)) doFinish();
+					}
+					
+					linePoints.clear();
+					
+					invalidate();
+				}
+				
+				return true;
+			}
+			
+			@Override
+			public void onShowPress(MotionEvent e) {
+				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onShowPress]");
+			}
+			
+			@Override
+			public boolean onSingleTapUp(MotionEvent e) {
+				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onSingleTapUp]");
+				
+				if(!connectionService.mouseLeftClick()) doFinish();
+				
+				return true;
+			}
+			
+			@Override
+			public boolean onDoubleTap(MotionEvent e) {
+				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onDoubleTap]");
+				
+				if(!connectionService.mouseLeftClick()) doFinish();
+				
+				return true;
+			}
+		};
 		
 		/**
 		 * Constructor.
@@ -268,37 +402,38 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 			
 			linePath = new Path();
 			
-			gestureDetector = new GestureDetector(getContext(), this);
+			gestureDetector = new GestureDetector(getContext(),
+					simpleOnGestureListener, null, false);
 			
 			setFocusable(true);
 			setFocusableInTouchMode(true);
 			setBackgroundColor(backgroundColor);
+			
+			int textSize = 23;
+			if(Common.getDisplayHeight(context)>800) {
+				textSpaceLine = Common.getDisplayHeight(context)/280;
+				textYPosition = (int)(Common.getDisplayHeight(context)/6.5);
+				textSize = Common.getDisplayWidth(getContext())/26;
+			} else {
+				textSpaceLine = Common.getDisplayHeight(context)/240;
+				textYPosition = (int)(Common.getDisplayHeight(context)/4.5);
+				textSize = Common.getDisplayWidth(getContext())/24;
+			}
 			
 			paintLine.setColor(paintColor);
 			paintLine.setAntiAlias(true);
 			paintLine.setStrokeWidth(Common.getDisplayWidth(getContext())/70);
 			paintLine.setStyle(Style.STROKE);
 			
+			paintText.setTextSize(textSize);
 			paintText.setColor(fontColor);
 			paintText.setAntiAlias(true);
-			paintText.setTextSize(Common.getDisplayWidth(getContext())/23);
 			paintText.setTextAlign(Align.CENTER);
 			
 			showAndHideKeyboard = false;
 			
 			mouseWheelSmooth = (float)preferences.getInt(
 					getString(R.string.pref_name_mouse_wheel_smooth), 40) / 65;
-			
-			if(Common.getDisplayHeight(context)>800) {
-				textSpaceLine = Common.getDisplayHeight(context)/280;
-				textYPosition = (int)(Common.getDisplayHeight(context)/6.5);
-			} else {
-				textSpaceLine = Common.getDisplayHeight(context)/240;
-				textYPosition = (int)(Common.getDisplayHeight(context)/4.5);
-			}
-			
-			/* Used for double touch. */
-			/* lastTimeTouch = -1; */
 		}
 		
 		@SuppressLint("DrawAllocation")
@@ -361,7 +496,6 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 		
 		@Override
 		public boolean onTouchEvent(MotionEvent event) {
-			
 			/* Here we need to catch touch with three fingers. */
 			switch(event.getAction() & MotionEvent.ACTION_MASK) {
 				case MotionEvent.ACTION_POINTER_DOWN:
@@ -369,20 +503,7 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 						if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onTouchEvent]" +
 								"[Show/Hide keyboard.]");
 						
-						InputMethodManager inputMethodManager = (InputMethodManager)
-								getSystemService(Context.INPUT_METHOD_SERVICE);
-						
-						if(showAndHideKeyboard) {
-							inputMethodManager.toggleSoftInput(
-									InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-							
-							showAndHideKeyboard = false;
-						} else {
-							inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,
-									InputMethodManager.HIDE_IMPLICIT_ONLY);
-							
-							showAndHideKeyboard = true;
-						}
+						showOrHideKeyboard();
 						
 						linePoints.clear();
 						
@@ -396,91 +517,6 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 			}
 			
 			return gestureDetector.onTouchEvent(event);
-		}
-		
-		@Override
-		public boolean onDown(MotionEvent e) {
-			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onDown]");
-			
-			linePoints.clear();
-			
-			invalidate();
-			
-			PointF point = new PointF();
-			point.x = e.getX();
-			point.y = e.getY();
-			
-			linePoints.add(point);
-			
-			return true;
-		}
-		
-		@Override
-		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-				float velocityY) {
-			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onFling]");
-			
-			return true;
-		}
-		
-		@Override
-		public void onLongPress(MotionEvent e) {
-			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onLongPress]");
-			
-			if(!connectionService.mouseRightClick()) doFinish();
-			
-			invalidate();
-		}
-		
-		@Override
-		public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-				float distanceY) {
-			
-			/* For scrolling efect we need to catch up two or more finger movement. */
-			if(e2.getPointerCount()==1) {
-				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onScroll][Mooving.][distance X: " + distanceX + "][distance Y: " + distanceY + "]");
-				if(!connectionService.moveMouse(distanceX, distanceY)) doFinish();
-				
-				if(linePoints.size()>50) linePoints.remove(0);
-				
-				PointF point = new PointF();
-				
-				point.x = e2.getX();
-				point.y = e2.getY();
-				
-				linePoints.add(point);
-				
-				invalidate();
-			} else if(e2.getPointerCount()==2) {
-				float finalDistanceY = distanceY*mouseWheelSmooth;
-				
-				if(distanceY>0) {
-					if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onScroll][Scrolling up.]");
-					if(!connectionService.mouseWheel(finalDistanceY)) doFinish();
-				} else {
-					if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onScroll][Scrolling down.]");
-					if(!connectionService.mouseWheel(finalDistanceY)) doFinish();
-				}
-				
-				linePoints.clear();
-				invalidate();
-			}
-			
-			return true;
-		}
-		
-		@Override
-		public void onShowPress(MotionEvent e) {
-			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onShowPress]");
-		}
-		
-		@Override
-		public boolean onSingleTapUp(MotionEvent e) {
-			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onSingleTapUp]");
-			
-			if(!connectionService.mouseLeftClick()) doFinish();
-			
-			return true;
 		}
 		
 		/**

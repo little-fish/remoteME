@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <string name="text_app_name">remoteME</string>
-    <string name="text_app_version">1.0.1</string>
+    <string name="text_app_version">1.0.2</string>
     <string name="text_app_author">babi</string>
     <string name="text_server">Server</string>
     <string name="text_connected">Připojeno</string>
@@ -96,13 +96,13 @@
     <string name="connection_service_connection_lost_text">Spojení se serverem bylo ztraceno.</string>
     <string name="connection_service_disconnected_text">Odpojeno.</string>
     
-    <string name="remote_mouse_description_text">pohyb prstem - pohyb kurzoru\npohyb dvěma prsty - rolování\njednoduchý dotek - levé myšítko\ndlouhý dotek - pravé myšítko\ndvojitý dotek - dvojité levé myšítko\ndotek třemi prsty - zobrazit/skrýt klávesnici</string>
+    <string name="remote_mouse_description_text">pohyb prstem - pohyb kurzoru\npohyb dvěma prsty - rolování\njednoduchý dotek - levé myšítko\ndlouhý dotek - pravé myšítko\ndvojitý dotek - dvojité levé myšítko\nmenu/dotek třemi prsty - zobrazit/skrýt klávesnici</string>
     
     <string name="menu_activity_main_preferences_text">Nastavení</string>
     <string name="menu_activity_main_about_text">O programu</string>
     
     <string name="about_main_text"><b>remoteME</b> je dobře vypadající, extrémně konfigurovatelné a open source řešení pro vzdálenou správu vaších počítačů, bez ohledu na to, jaký operační systém používáte (Linux, MAC OS, nebo MS Windows).</string>
-	<string name="about_remotes_text">Máte k dispozici nejméně 11 ovladačů pro většinu nejpoužívanějších multimediálních přehrávačů plus ty, které si vytvoříte sami. Ovladače pro myš, klávesnici a power control jsou samozřejmostí.</string>
+	<string name="about_remotes_text">Máte k dispozici nejméně 11 ovladačů pro většinu nejpoužívanějších multimediálních přehrávačů plus ty, které si vytvoříte sami. Ovladače pro myš, klávesnici, prezentaci a power control jsou samozřejmostí.</string>
 	<string name="about_server_text">Pro správné používání této aplikace je nutné, abyste na svém počítači měli spuštěnou serverovou část aplikace.</string>
 	<string name="about_information_text">Pro více informací prosím navštivte</string>
 	<string name="about_homepage_text">domovskou stránku</string>
