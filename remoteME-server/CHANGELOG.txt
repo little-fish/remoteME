@@ -1,0 +1,11 @@
+ ***  remoteME - server  ***
+
++ Add
+- Remove
+* Fix
+------------------------------
+
+1.0.1
+ + Possibility to turn debug on via command line: "java -jar remoteME-server.jar -debug"
+
+1.0.0 - Major release.
