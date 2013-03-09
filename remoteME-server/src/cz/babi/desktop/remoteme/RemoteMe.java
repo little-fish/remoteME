@@ -40,6 +40,15 @@ public class RemoteMe {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		/* User may add commands when starting the application. */
+		if(args.length>0) {
+			String command = args[0];
+			/* If there is a debug argument, we need to set logging on. */
+			if(command.equals(Common.DEBUG_ARGUMENT))
+				settings.setLogLevel(Common.LOG_ERROR);
+		}
+		
 		if(Common.DEBUG) LOGGER.debug("[main][Application started.]");
 		
 		RemoteMe remoteMe = new RemoteMe();

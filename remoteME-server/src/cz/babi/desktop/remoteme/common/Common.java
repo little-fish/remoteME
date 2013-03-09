@@ -64,6 +64,14 @@ public class Common {
 	public static final String COMMAND_RESTART = "restart";
 	public static final String COMMAND_LOGOFF = "logoff";
 	
+	/** Debug argument. */
+	public static final String DEBUG_ARGUMENT = "-debug";
+	
+	/** Debug log level. */
+	public static final int LOG_DEBUG = 1;
+	public static final int LOG_WARN = 2;
+	public static final int LOG_ERROR = 3;
+	
 	/** For programatically set logging on/off */
 	public static int LOGLEVEL = Settings.getInstance().getLogLevel();
 	public static boolean ERROR = LOGLEVEL > 2;
