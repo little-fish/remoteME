@@ -103,8 +103,7 @@
             android:name=".trash.TestActivity"
             android:theme="@style/HoloDarkDialogTheme" >
         </activity>
-        
-        
+  
     </application>
 
 </manifest>
