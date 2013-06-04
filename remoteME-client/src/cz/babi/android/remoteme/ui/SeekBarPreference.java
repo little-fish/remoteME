@@ -132,7 +132,7 @@ public class SeekBarPreference extends DialogPreference implements OnSeekBarChan
 			try {
 				defValue = (Integer)defaultValue;
 			} catch(Exception ex) {
-				Log.e(TAG_CLASS_NAME, "[onSetInitialValue][Invalid default value][" +
+				if(Common.ERROR) Log.e(TAG_CLASS_NAME, "[onSetInitialValue][Invalid default value][" +
 						defaultValue.toString() + "]");
 			}
 			

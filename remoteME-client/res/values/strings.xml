@@ -101,7 +101,7 @@
     <string name="menu_activity_main_preferences_text">Preferences</string>
     <string name="menu_activity_main_about_text">About</string>
     
-	<string name="about_main_text"><b>remoteME</b> is a good-looking, extremely configurabe and open source Android remote controller for your computers no matter what operation system you are using (Linux, MAC OS, or MS Windows).</string>
+	<string name="about_main_text"><b>remoteME</b> is a good-looking, extremely configurabe and Open Source Android remote controller for your computers no matter what operation system you are using (Linux, MAC OS, or MS Windows).</string>
 	<string name="about_remotes_text">It offers you at least 11 remotes for the most frequent media players plus those which you create by yourself. Remotes for mouse, keyboard, presentation and power control are also included.</string>
 	<string name="about_server_text">Before using this application, please be sure you have a remoteME server running on your computer.</string>
 	<string name="about_information_text">For more information, please visit remoteME\'s</string>
