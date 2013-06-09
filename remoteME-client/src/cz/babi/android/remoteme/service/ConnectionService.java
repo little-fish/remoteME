@@ -56,32 +56,32 @@ import cz.babi.android.remoteme.ui.ActivityDialogListOfRemoteControllers;
  * @author dev.misiarz@gmail.com
  */
 public class ConnectionService extends Service {
-	
+
 	private static final String TAG_CLASS_NAME = ConnectionService.class.getSimpleName();
-	
+
 	private static final int NOTIFICATION_ID = 0;
-	
+
 	public static Server server;
-	
+
 	public static Socket clientSocket;
 	public static BufferedReader in;
 	public static PrintWriter out;
-	
+
 	public static boolean needEncryptedCommunication;
-	
+
 	private static final AES128 AES128_DEFAULT = Common.AES128_DEFAULT;
-	
+
 	private final IBinder binder = new ConnectionBinder();
-	
+
 	private NotificationManager notificationManager;
-	
+
 	private SharedPreferences preferences;
-	
+
 	private WifiLock wifiLock;
-	
+
 	private boolean disconnectWithError = false;
 	private boolean isNotificationVisible = false;
-	
+
 	/**
 	 * Class for clients to access.  Because we know this service always
 	 * runs in the same process as its clients, we don't need to deal with
@@ -92,61 +92,61 @@ public class ConnectionService extends Service {
 			return ConnectionService.this;
 		}
 	}
-	
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onBind]");
 		return binder;
 	}
-	
+
 	@Override
 	public void onCreate() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onCreate]");
-		
+
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
 		/* Lock Wi-Fi, if need so. */
 		WifiManager wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
 		wifiLock = wifiManager.createWifiLock(WifiManager.WIFI_MODE_FULL, "WiFiLockTag");
 		if(preferences.getBoolean(getString(R.string.pref_name_keep_wifi_alive), true))
 			lockWiFi();
-		
+
 		/* Display a notification about us starting. */
 		if(preferences.getBoolean(getString(R.string.pref_name_show_notification), true)) {
 			showNotification();
 		}
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onDestroy]");
-		
+
 		/* Cancel the persistent notification. */
 		if(isNotificationVisible) notificationManager.cancel(NOTIFICATION_ID);
-		
+
 		/* If Wi-Fi is locked we need to unlock it. */
 		if(wifiLock.isHeld()) unlockWifi();
-		
+
 		/* If there was no error we send 'bye bye' message to server and show toast to user. */
 		if(!disconnectWithError) {
 			/* Just tell to server that we are disconnecting. */
 			SimpleMessage byeBye = Message.BYE_BYE;
-			
+
 			String message = byeBye.toString();
 			if(needEncryptedCommunication) message = AES128_DEFAULT.encryptText(
 					byeBye.toString());
-			
+
 			out.println(message);
 			out.flush();
-			
+
 			/* Tell the user we stopped. */
 			LayoutInflater mInflater = (LayoutInflater)this.getSystemService(
 					Context.LAYOUT_INFLATER_SERVICE);
 			View toastLayout = mInflater.inflate(R.layout.toast_normal, null);
-			
+
 			TextView text = (TextView)toastLayout.findViewById(R.id.normal_text);
 			text.setText(R.string.connection_service_disconnected_text);
-			
+
 			Toast toast = new Toast(this);
 			toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
 			toast.setDuration(Toast.LENGTH_LONG);
@@ -154,47 +154,47 @@ public class ConnectionService extends Service {
 			toast.show();
 		}
 	}
-	
+
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onStartCommand]Received start id " + startId + ": " + intent);
-		
+
 		/* We want this service to continue running until it is explicitly
 		 stopped, so return sticky. */
 		return START_STICKY;
 	}
-	
+
 	/**
 	 * @return the disconnectWithError
 	 */
 	public boolean isDisconnectWithError() {
 		return disconnectWithError;
 	}
-	
+
 	/**
 	 * Lock Wi-Fi
 	 */
 	private void lockWiFi() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[lockWiFi]");
-		
+
 		wifiLock.acquire();
 	}
-	
+
 	/**
 	 * Unlock Wi-Fi
 	 */
 	private void unlockWifi() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[unlockWifi]");
-		
+
 		wifiLock.release();
 	}
-	
+
 	/**
 	 * Show a notification while this service is running.
 	 */
 	private void showNotification() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[showNotification]");
-		
+
 		if(server!=null) {
 			/* Set notification ifon. */
 			int iconResource = R.drawable.os_tux;
@@ -202,9 +202,9 @@ public class ConnectionService extends Service {
 				iconResource = R.drawable.os_mac;
 			else if(server.getOsName().toLowerCase().indexOf("win")!=-1)
 				iconResource = R.drawable.os_win;
-			
+
 			Bitmap icon = BitmapFactory.decodeResource(getResources(), iconResource);
-			
+
 			notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this).
 					setSmallIcon(R.drawable.app_icon_status_bar).
@@ -215,29 +215,29 @@ public class ConnectionService extends Service {
 							setTicker(getText(R.string.text_connected) + " " + getText(R.string.text_to) +
 									" " + Common.getProperIpAddress(server.getIpAddress()) + ":" +
 									server.getPort());
-			
+
 			Intent resultIntent = new Intent(this, ActivityDialogListOfRemoteControllers.class);
-			
+
 			PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 1,
 					resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-			
+
 			notificationBuilder.setContentIntent(resultPendingIntent);
-			
+
 			/* Prevent before closing by user. */
 			notificationBuilder.setOngoing(true);
-			
+
 			notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
-			
+
 			isNotificationVisible = true;
 		}
 	}
-	
+
 	/**
 	 * If server is unreachable we need to stop service and notice that to user.
 	 */
 	private void closeConnection() {
-		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[stopService]");
-		
+		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[closeConnection]");
+
 		if(clientSocket!=null)
 			try {
 				clientSocket.close();
@@ -245,40 +245,40 @@ public class ConnectionService extends Service {
 				if(Common.ERROR) Log.e(TAG_CLASS_NAME, "[stopService][Can not close client " +
 						"socket.]");
 			}
-		
+
 		ConnectionService.server = null;
 		ConnectionService.clientSocket = null;
 		ConnectionService.in = null;
 		ConnectionService.out = null;
 		ConnectionService.needEncryptedCommunication = false;
-		
+
 		LayoutInflater mInflater = (LayoutInflater)this.getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE);
 		View toastLayout = mInflater.inflate(R.layout.toast_warning, null);
-		
+
 		TextView text = (TextView)toastLayout.findViewById(R.id.warning_text);
 		text.setText(R.string.connection_service_connection_lost_text);
-		
+
 		Toast toast = new Toast(this);
 		toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
 		toast.setDuration(Toast.LENGTH_LONG);
 		toast.setView(toastLayout);
 		toast.show();
-		
+
 		disconnectWithError = true;
 	}
-	
+
 	/**
 	 * Check connection error.
 	 * @return Is connection error?
 	 */
 	private boolean checkConnectionError() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[checkConnectionError]");
-		
+
 		if(out==null) return true;
 		else return out.checkError();
 	}
-	
+
 	/**
 	 * Move mouse.
 	 * @param offsetX Amount X.
@@ -290,14 +290,14 @@ public class ConnectionService extends Service {
 			SimpleMessage mouseMove = Message.MOUSE_MOVE;
 			mouseMove.setAddInfo(String.valueOf(offsetX) + SimpleMessage.SEPARATOR +
 					String.valueOf(offsetY));
-			
+
 			String message = mouseMove.toString();
 			if(needEncryptedCommunication) message = AES128_DEFAULT.encryptText(
 					mouseMove.toString());
-			
+
 			out.println(message);
 			out.flush();
-			
+
 			return true;
 		} else {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[moveMouse][Server is disconnected.]");
@@ -305,7 +305,7 @@ public class ConnectionService extends Service {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Mouse wheel.
 	 * @param wheelAmount Wheel amount.
@@ -315,14 +315,14 @@ public class ConnectionService extends Service {
 		if(!checkConnectionError()) {
 			SimpleMessage mouseWheel = Message.MOUSE_WHEEL;
 			mouseWheel.setAddInfo(String.valueOf(wheelAmount));
-			
+
 			String message = mouseWheel.toString();
 			if(needEncryptedCommunication) message = AES128_DEFAULT.encryptText(
 					mouseWheel.toString());
-			
+
 			out.println(message);
 			out.flush();
-			
+
 			return true;
 		} else {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[mouseWheel][Server is disconnected.]");
@@ -330,7 +330,7 @@ public class ConnectionService extends Service {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Left mouse click.
 	 * @param button Clicked button.
@@ -339,14 +339,14 @@ public class ConnectionService extends Service {
 	public boolean mouseLeftClick() {
 		if(!checkConnectionError()) {
 			SimpleMessage mouseLeftClick = Message.MOUSE_LEFT_CLICK;
-			
+
 			String message = mouseLeftClick.toString();
 			if(needEncryptedCommunication) message = AES128_DEFAULT.encryptText(
 					mouseLeftClick.toString());
-			
+
 			out.println(message);
 			out.flush();
-			
+
 			return true;
 		} else {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[mouseLeftClick][Server is disconnected.]");
@@ -354,7 +354,7 @@ public class ConnectionService extends Service {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Right mouse click.
 	 * @param button Clicked button.
@@ -363,14 +363,14 @@ public class ConnectionService extends Service {
 	public boolean mouseRightClick() {
 		if(!out.checkError()) {
 			SimpleMessage mouseRightClick = Message.MOUSE_RIGHT_CLICK;
-			
+
 			String message = mouseRightClick.toString();
 			if(needEncryptedCommunication) message = AES128_DEFAULT.encryptText(
 					mouseRightClick.toString());
-			
+
 			out.println(message);
 			out.flush();
-			
+
 			return true;
 		} else {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[mouseRightClick][Server is disconnected.]");
@@ -378,7 +378,7 @@ public class ConnectionService extends Service {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Simulate key stroke.
 	 * @param character Character.
@@ -388,13 +388,13 @@ public class ConnectionService extends Service {
 		if(!out.checkError()) {
 			SimpleMessage keyStroke = Message.KEY_STROKE;
 			keyStroke.setAddInfo(character);
-			
+
 			String message = keyStroke.toString();
 			if(needEncryptedCommunication) message = AES128_DEFAULT.encryptText(message);
-			
+
 			out.println(message);
 			out.flush();
-			
+
 			return true;
 		} else {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[keyStroke][Server is disconnected.]");
@@ -402,7 +402,7 @@ public class ConnectionService extends Service {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Simulate clipboard.
 	 * @param character Character.
@@ -412,13 +412,13 @@ public class ConnectionService extends Service {
 		if(!out.checkError()) {
 			SimpleMessage keyClipboard = Message.KEY_CLIPBOARD;
 			keyClipboard.setAddInfo(character);
-			
+
 			String message = keyClipboard.toString();
 			if(needEncryptedCommunication) message = AES128_DEFAULT.encryptText(message);
-			
+
 			out.println(message);
 			out.flush();
-			
+
 			return true;
 		} else {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[keyClipboard][Server is disconnected.]");
@@ -426,7 +426,7 @@ public class ConnectionService extends Service {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Do special command. Like shutdown, restart or logoff.
 	 * @param action Special command.
@@ -436,13 +436,13 @@ public class ConnectionService extends Service {
 		if(!out.checkError()) {
 			SimpleMessage doSpecial = Message.SPECIAL_COMMAND;
 			doSpecial.setAddInfo(action);
-			
+
 			String message = doSpecial.toString();
 			if(needEncryptedCommunication) message = AES128_DEFAULT.encryptText(message);
-			
+
 			out.println(message);
 			out.flush();
-			
+
 			return true;
 		} else {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[doSpecial][Server is disconnected.]");

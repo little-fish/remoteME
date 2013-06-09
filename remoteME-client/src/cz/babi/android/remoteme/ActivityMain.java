@@ -55,46 +55,50 @@ import cz.babi.android.remoteme.ui.MultiSelectListPreference;
  * @author dev.misiarz@gmail.com
  */
 public class ActivityMain extends ListActivity {
-	
+
 	private static final String TAG_CLASS_NAME = ActivityMain.class.getSimpleName();
-	
+
 	/** This variables are using for checking if application needs to create
 	 * some preferences. */
+	//TODO: Do not forget to increase preferences version!!!
 	private static final int SHARED_PREFERENCES_VERSION = 1;
-	
+
 	/** Shared preferences for this application. */
 	private SharedPreferences preferences;
-	
+
 	public static final String BROADCAST_ACTION_REFRESH_SERVERS =
 			"cz.babi.android.remoteme.action.refreshservers";
-	
+
 	public static final Intent BROADCAST_INTENT_REFRESH_SERVERS =
 			new Intent(BROADCAST_ACTION_REFRESH_SERVERS);
-	
+
 	/** When onResume() is called we need to check if we need to refresh list with servers. */
 	public static boolean needRefreshServers = false;
-	
+
 	private MySQLiteOpenHelper databaseHelper;
 	private Cursor serverCursor;
 	private DatabaseCursorAdapter databaseCursorAdapter;
-	
+
 	/* If there is 0 then we need to copy some files to sd card.*/
 	private int appStartPrefVersion = 0;
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onCreate]");
-		
+
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
+		/* Set debug mode. */
+		setDebugMode();
+
+		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onCreate]");
+
 		/* Set orientation. */
 		setOrientation();
-		
+
 		appStartPrefVersion = getSharedPrefVersion();
-		
+
 		/* We need to check if app is start for the first time. If so, we need to
 		 * prepare some preferences and folders. */
 		if(savedInstanceState==null) {
@@ -103,40 +107,40 @@ public class ActivityMain extends ListActivity {
 			/* Check folders. */
 			if(!checkFoldersOnSDCard()) createFoldersOnSDCard();
 		}
-		
+
 		setContentView(R.layout.activity_main);
-		
+
 		this.databaseHelper = MySQLiteOpenHelper.getInstance(this.getApplicationContext());
-		
+
 		int orderBy = preferences.getInt(getString(R.string.pref_name_server_order),
 				getResources().getInteger(R.integer.pref_value_order_by_name));
 		reOrderCursor(orderBy);
 		startManagingCursor(this.serverCursor);
-		
+
 		String[] from = new String[] { MySQLiteOpenHelper.COLUMN_IP_ADDRESS,
 				MySQLiteOpenHelper.COLUMN_PORT, MySQLiteOpenHelper.COLUMN_SERVER_NAME,
 				MySQLiteOpenHelper.COLUMN_PASSWORD, MySQLiteOpenHelper.COLUMN_OS_NAME};
-		
+
 		int[] to = new int[] {R.id.serverrow_text_server_address,
 				R.id.serverrow_text_server_address, R.id.serverrow_text_server_name,
 				R.id.serverrow_icon_locked, R.id.serverrow_icon_os_type};
-		
+
 		this.databaseCursorAdapter = new DatabaseCursorAdapter(
 				this, R.layout.row_server_main, this.serverCursor, from, to);
-		
+
 		setListAdapter(this.databaseCursorAdapter);
-		
+
 		/* Set empty view to list view. */
 		TextView emptyView = (TextView)findViewById(R.id.main_empty);
 		getListView().setEmptyView(emptyView);
-		
+
 		/* We need to set proper background. We will check aspect ration of screen resolution. */
 		LinearLayout activityLayout = (LinearLayout)findViewById(R.id.activity_main_layout);
 		Drawable back;
-		
+
 		int width = Common.getDisplayWidth(this);
 		int height = Common.getDisplayHeight(this);
-		
+
 		/*
 		 * Known ratios:
 		 * 320x480 = 1.5
@@ -151,48 +155,48 @@ public class ActivityMain extends ListActivity {
 			/* For 1280x800, and so on.. */
 			back = getResources().getDrawable(R.drawable.background_w);
 		}
-		
+
 		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN) {
 			activityLayout.setBackground(back);
 		} else activityLayout.setBackgroundDrawable(back);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onCreateOptionsMenu]");
-		
+
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menu_activity_main, menu);
-		
+
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
-			case R.id.menu_activity_main_preferences:
-				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onOptionsItemSelected][Preferences.]");
-				startActivityForResult(new Intent(this, ActivityPreferences.class), 0);
-				return true;
-			case R.id.menu_activity_main_about:
-				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onOptionsItemSelected][About.]");
-				startActivity(new Intent(this, ActivityAbout.class));
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
+		case R.id.menu_activity_main_preferences:
+			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onOptionsItemSelected][Preferences.]");
+			startActivityForResult(new Intent(this, ActivityPreferences.class), 0);
+			return true;
+		case R.id.menu_activity_main_about:
+			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onOptionsItemSelected][About.]");
+			startActivity(new Intent(this, ActivityAbout.class));
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onActivityResult]");
-		
+
 		/* Set orientation after preferences activity finish. */
 		setOrientation();
-		
+
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
+
 	/**
 	 * Broadcast receiver which will receive intent to reorder servers.
 	 */
@@ -201,46 +205,46 @@ public class ActivityMain extends ListActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onReceive]");
-			
+
 			int orderBy;
 			Bundle orderByBundle = intent.getExtras();
-			
+
 			if(orderByBundle==null) orderBy = preferences.getInt(
 					getString(R.string.pref_name_server_order),
 					getResources().getInteger(R.integer.pref_value_order_by_name));
 			else orderBy = orderByBundle.getInt(Actionbar.ORDER_BY,
 					getResources().getInteger(R.integer.pref_value_order_by_name));
-			
+
 			reOrderCursor(orderBy);
-			
+
 			startManagingCursor(serverCursor);
 			databaseCursorAdapter.changeCursor(serverCursor);
 		}
 	};
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onResume() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onResume]");
-		
+
 		super.onResume();
-		
+
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(BROADCAST_ACTION_REFRESH_SERVERS);
 		this.registerReceiver(this.broadcastReceiver, intentFilter);
-		
+
 		if(needRefreshServers) {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onResume][Refreshing cursor...]");
 			reOrderCursor(preferences.getInt(
 					getString(R.string.pref_name_server_order),
 					getResources().getInteger(R.integer.pref_value_order_by_name)));
-			
+
 			startManagingCursor(serverCursor);
 			databaseCursorAdapter.changeCursor(serverCursor);
-			
+
 			needRefreshServers = false;
 		}
-		
+
 		/* If there is no adapter created we need to start parsing task.
 		 * Need to parsing data when app is starting. With that there is no
 		 * delay when showing dialog with controllers. */
@@ -251,10 +255,10 @@ public class ActivityMain extends ListActivity {
 			if(needCopyControllersToSD(appStartPrefVersion)) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onResume][Need copy xml " +
 						"files to sd card.]");
-				
+
 				XMLCopyingTask xmlCopyingTask = new XMLCopyingTask(this);
 				xmlCopyingTask.execute();
-				
+
 				appStartPrefVersion = getSharedPrefVersion();
 			} else {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onResume][Do not need copy xml " +
@@ -263,64 +267,64 @@ public class ActivityMain extends ListActivity {
 				xmlParsingTask.execute();
 			}
 		}
-		
+
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onPause() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onPause]");
-		
+
 		super.onPause();
-		
+
 		stopManagingCursor(serverCursor);
-		
+
 		this.unregisterReceiver(this.broadcastReceiver);
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void finish() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[finish]");
-		
+
 		/* Clear adapter. */
 		RemoteControllerArrayAdapter.setInstanceNull();
-		
+
 		/* When finishing activity the empty view always appear.
 		 * Its due to removing cursor from lis view. So simple set
 		 * empty text to this view. */
 		TextView emptyView = (TextView)findViewById(R.id.main_empty);
 		emptyView.setText("");
-		
+
 		this.databaseHelper.close();
 		stopManagingCursor(serverCursor);
 		this.serverCursor.close();
-		
+
 		super.finish();
 	}
-	
+
 	/**
 	 * Get version of shared preferences.
 	 * @return Version of shared preferences.
 	 */
 	private int getSharedPrefVersion() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[checkFirstStart]");
-		
+
 		return preferences.getInt(
 				getString(R.string.pref_name_shared_pref_version), 0);
 	}
-	
+
 	/**
 	 * Check if we need to prepare some preferences.
 	 * @return Need to create some preferences?
 	 */
 	private boolean checkFirstStart(int preferencesVersion) {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[checkFirstStart]");
-		
+
 		if(preferencesVersion<SHARED_PREFERENCES_VERSION) return true;
 		else return false;
 	}
-	
+
 	/**
 	 * Do we need copy remote controllers to sd card.
 	 * @param preferencesVersion Version of shared preferences.
@@ -332,15 +336,15 @@ public class ActivityMain extends ListActivity {
 		 * It will be enabled in feature. */
 		return false;
 	}
-	
+
 	/**
 	 * Method prepare some preferences.
 	 */
 	private void preparePreferences() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[preparePreferences]");
-		
+
 		SharedPreferences.Editor editor = preferences.edit();
-		
+
 		editor.putInt(getString(R.string.pref_name_shared_pref_version),
 				SHARED_PREFERENCES_VERSION);
 		editor.putInt(getString(R.string.pref_name_server_order),
@@ -358,7 +362,8 @@ public class ActivityMain extends ListActivity {
 		editor.putString(getString(R.string.pref_name_orientation_lock),
 				getString(R.string.pref_value_default));
 		editor.putBoolean(getString(R.string.pref_name_show_notification), true);
-		
+		editor.putBoolean(getString(R.string.pref_name_debug_mode), false);
+
 		String visibleRemotes[] = getResources().getStringArray(
 				R.array.default_visible_remotes_values);
 		StringBuilder sbVisibleRemote = new StringBuilder();
@@ -369,46 +374,46 @@ public class ActivityMain extends ListActivity {
 					MultiSelectListPreference.DEFAULT_SEPARATOR);
 		}
 		editor.putString(getString(R.string.pref_name_visible_remotes), sbVisibleRemote.toString());
-		
+
 		editor.commit();
-		
+
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[preparePreferences][All necessary " +
 				"preferences was created.]");
 	}
-	
+
 	/**
 	 * Check if needed folders exist on sd card.
 	 * @return True if needed folders exist.
 	 */
 	private boolean checkFoldersOnSDCard() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[checkFoldersOnSDCard]");
-		
+
 		File sdCard = Environment.getExternalStorageDirectory();
-		
+
 		File appFolder = new File(sdCard.getAbsolutePath(), Common.APP_FOLDER);
-		
+
 		if(appFolder.exists()) {
 			File icoFolder = new File(appFolder.getAbsolutePath(), Common.ICON_FOLDER);
-			
+
 			if(icoFolder.exists()) return true;
 			else return false;
 		} else return false;
 	}
-	
+
 	/**
 	 * Create folders on sd card.
 	 */
 	private void createFoldersOnSDCard() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[createFoldersOnSDCard]");
-		
+
 		File sdCard = Environment.getExternalStorageDirectory();
-		
+
 		File icoFolder = new File(sdCard.getAbsolutePath() + "/" +
 				Common.APP_FOLDER + "/" + Common.ICON_FOLDER);
-		
+
 		if(!icoFolder.exists()) icoFolder.mkdirs();
 	}
-	
+
 	/**
 	 * Set orientation.
 	 */
@@ -416,7 +421,7 @@ public class ActivityMain extends ListActivity {
 		String currentOrientationLock = preferences.
 				getString(getString(R.string.pref_name_orientation_lock),
 						getString(R.string.pref_value_default));
-		
+
 		if(currentOrientationLock.equals(getString(R.string.pref_value_portait))) {
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else if(currentOrientationLock.equals(getString(R.string.pref_value_landscape))) {
@@ -425,14 +430,32 @@ public class ActivityMain extends ListActivity {
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 		}
 	}
-	
+
+	/**
+	 * Set debug mode.
+	 */
+	private void setDebugMode() {
+		boolean debugMode = preferences.
+				getBoolean(getString(R.string.pref_name_debug_mode), false);
+
+		if(debugMode) {
+			Common.DEBUG = true;
+			Common.WARN = true;
+			Common.ERROR = true;
+		} else {
+			Common.DEBUG = false;
+			Common.WARN = false;
+			Common.ERROR = false;
+		}
+	}
+
 	/**
 	 * Method will reorder Cursor.
 	 * @param orderBy Order by.
 	 */
 	private void reOrderCursor(int orderBy) {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[reOrderCursor]");
-		
+
 		if(orderBy==getResources().getInteger(R.integer.pref_value_order_by_name)) {
 			serverCursor = databaseHelper.getCursorForAllServers(
 					MySQLiteOpenHelper.COLUMN_SERVER_NAME);

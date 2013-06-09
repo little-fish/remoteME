@@ -49,47 +49,47 @@ import cz.babi.android.remoteme.ui.ActivityDialogServerSearch.SearchingFragment;
  * @author dev.misiarz@gmail.com
  */
 public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
-	
+
 	private SearchingFragment parentFragment = null;
-	
+
 	private MulticastSocket multicastSocket = null;
-	
+
 	private WifiManager wifiManager;
 	private MulticastLock wifiMulticastLock;
-	
+
 	private boolean stoppedByUser = false;
-	
+
 	private final SharedPreferences preferences;
-	
+
 	private static final String TAG_CLASS_NAME = UDPScanModeTask.class.getSimpleName();
-	
+
 	private static final AES128 AES128_DEFAULT = Common.AES128_DEFAULT;
-	
+
 	/** variable define port for our request and responses */
 	private int port;
 	/** variable define multicast address which datagrams will be sent to */
 	private static final String MULTICAST_ADDR = "230.0.0.1";
-	
+
 	/**
 	 * Constructor.
 	 * @param parentFragmentActivity Parent activity. Needs for access to its methods.
 	 */
 	public UDPScanModeTask(SearchingFragment parentFragmentActivity) {
 		this.parentFragment = parentFragmentActivity;
-		
+
 		preferences = PreferenceManager.getDefaultSharedPreferences(
 				parentFragment.getActivity());
-		
+
 		port = Integer.valueOf(preferences.getString(
 				this.parentFragment.getResources().getString(R.string.pref_name_udp_scan_mode_port),
 				String.valueOf(4449)));
 	}
-	
+
 	@Override
 	protected ArrayList<Server> doInBackground(Void... params) {
 		return findServers();
 	}
-	
+
 	@Override
 	protected void onPostExecute(ArrayList<Server> result) {
 		if(parentFragment!=null) {
@@ -98,7 +98,7 @@ public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
 			if(!stoppedByUser) parentFragment.updateUI();
 		}
 	}
-	
+
 	@Override
 	protected void onPreExecute() {
 		if(parentFragment!=null) {
@@ -106,59 +106,60 @@ public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
 			parentFragment.updateUI();
 		}
 	}
-	
+
 	/**
 	 * Start Scan Mode.
 	 * @return Founded servers.
 	 */
 	private ArrayList<Server> findServers() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Start scaning...]");
-		
+
 		/* On some devices scan mod not work properly. By locking multicast we are able
 		 * to fix it. */
 		wifiManager = (WifiManager)parentFragment.getActivity().getSystemService(Context.WIFI_SERVICE);
 		wifiMulticastLock = wifiManager.createMulticastLock("multicastLock");
 		wifiMulticastLock.acquire();
-		
+
 		try {
 			multicastSocket = new MulticastSocket(port);
 		} catch(IOException ioe) {
 			if(Common.ERROR) Log.e(TAG_CLASS_NAME, "[findServers][Can not create a MulticastSocket on port " + port + ".]", ioe);
 		}
-		
+
 		InetAddress multicastAddress = null;
-		
+
 		try {
 			multicastAddress = InetAddress.getByName(MULTICAST_ADDR);
 		} catch (UnknownHostException uhe) {
 			if(Common.ERROR) Log.e(TAG_CLASS_NAME, "[findServers][Can not get InetAddress from multicast address "
 					+ MULTICAST_ADDR + ".]", uhe);
 		}
-		
+
 		/* Need to encrypt our request */
 		String requestMessage = AES128_DEFAULT.encryptText(Message.SCAN_MODE_REQUEST.toString());
-		
+
 		byte[] request = null;
 		try {
 			request = requestMessage.getBytes(Common.CHARSET_UTF8);
 		} catch(UnsupportedEncodingException uee) {
 			if(Common.ERROR) Log.e(TAG_CLASS_NAME, "[findServers][An error occurred while trying to encode text.]", uee);
 		}
-		
+
 		DatagramPacket requestDatagramPacket = new DatagramPacket(
 				request, request.length, multicastAddress, port);
-		
-		/* Here we send broadcast datagram */
+
+		/* Here we send two broadcast datagrams (requests) */
 		try {
+			multicastSocket.send(requestDatagramPacket);
 			multicastSocket.send(requestDatagramPacket);
 		} catch (IOException ioe) {
 			if(Common.ERROR) Log.e(TAG_CLASS_NAME, "[findServers][Can not send a request datagram to " +
 					requestDatagramPacket.getAddress().getHostAddress() + ":" +
 					requestDatagramPacket.getPort() + "]", ioe);
 		}
-		
+
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Request sent!]");
-		
+
 		/* Need to prepare for responses */
 		if(multicastAddress.isMulticastAddress()) {
 			try {
@@ -173,16 +174,16 @@ public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
 				if(Common.ERROR) Log.e(TAG_CLASS_NAME, "[findServers][Can not turned broadcast on.[findServers]", se);
 			}
 		}
-		
+
 		ArrayList<Server> availableServers = new ArrayList<Server>();
-		
+
 		/* We do not want to receive our sent datagrams. */
 		try {
 			multicastSocket.setLoopbackMode(true);
 		} catch (SocketException se) {
 			if(Common.ERROR) Log.e(TAG_CLASS_NAME, "[findServers][Can not set LoopBack mode to socket.]", se);
 		}
-		
+
 		/* We need to set up timeout for scanning. */
 		try {
 			multicastSocket.setSoTimeout(
@@ -193,16 +194,16 @@ public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
 		} catch (SocketException se) {
 			if(Common.ERROR) Log.e(TAG_CLASS_NAME, "[findServers][Can not set timeout to MulticastSocket.]", se);
 		}
-		
+
 		/* There need to be a loop for waiting for an incoming responses. */
 		while(true) {
 			/* We do not know what size will be a encrypted response */
 			byte[] response = new byte[128];
 			DatagramPacket responseDatagramPacket = new DatagramPacket(
 					response, response.length);
-			
+
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Waiting for incoming response...]");
-			
+
 			/* Here we are waiting for incoming response */
 			try {
 				multicastSocket.receive(responseDatagramPacket);
@@ -211,66 +212,79 @@ public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
 						"Probably timeout was reached or user canceled the task.]");
 				break;
 			}
-			
+
 			if(responseDatagramPacket.getAddress()!=null) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Received response from:" +
 						responseDatagramPacket.getAddress().getHostAddress() + ":" +
 						responseDatagramPacket.getPort() + "]");
 				String responseMessage = new String(responseDatagramPacket.getData());
-				
+
 				/* Need to trim response message */
 				responseMessage = new String(responseMessage.trim());
-				
+
 				/* Here we need to decrypt incoming response */
 				String decryptedMessage = AES128_DEFAULT.decryptText(responseMessage);
-				
+
 				SimpleMessage simpleMessage = parseIncommingMessage(decryptedMessage);
-				
+
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Response from server: " +
 						simpleMessage.toString() + "]");
-				
+
 				if(simpleMessage.getId()==Message.SCAN_MODE_RESPONSE.getId()) {
-					
+
 					String hostName = simpleMessage.getAddInfo().split(SimpleMessage.SEPARATOR)[1];
 					String hostOsName = simpleMessage.getAddInfo().split(SimpleMessage.SEPARATOR)[2];
 					String macAddress = simpleMessage.getAddInfo().split(SimpleMessage.SEPARATOR)[3];
-					
+
 					String hostAddress = responseDatagramPacket.getAddress().getHostAddress();
 					long hostPort = responseDatagramPacket.getPort();
-					
-					availableServers.add(
-							new Server(hostAddress, macAddress, hostPort, hostName, hostOsName));
-					
-					if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Hoooaaaa, right response catched!!!]");
+
+					/* Check if founded server is already added to list */
+					boolean alreadyAdded = false;
+					for(Server server : availableServers) {
+						if(server.getIpAddress().compareTo(hostAddress)==0) {
+							alreadyAdded = true;
+							break;
+						}
+					}
+					/* If server is not in the list */
+					if(!alreadyAdded) {
+						availableServers.add(
+								new Server(hostAddress, macAddress, hostPort, hostName, hostOsName));
+
+						if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Hoooaaaa, right response catched!!!]" +
+								"[Server was added to the list.]");
+					} else if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Hoooaaaa, right response catched!!!]" +
+							"[Server is already in the list.]");
 				} else if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Wrong response :(]");
 			} else if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Response datagram do not have address.]");
 		}
-		
+
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Founded servers:]");
 		for(Server instance : availableServers) {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][# " + instance.getServerName() + " > running on "
 					+ instance.getOsName() + " > " + instance.getIpAddress() + ":"
 					+ instance.getPort() + " > with mac: " + instance.getMacAddress() + "]");
 		}
-		
+
 		try {
 			if(multicastSocket.isConnected()) multicastSocket.leaveGroup(multicastAddress);
 		} catch (IOException ioe) {
 			if(Common.ERROR) Log.e(TAG_CLASS_NAME, "[findServers][Socket can not leave multicast group.]", ioe);
 		}
-		
+
 		if(multicastSocket.isConnected()) multicastSocket.close();
-		
+
 		if(wifiMulticastLock!=null && wifiMulticastLock.isHeld()) {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][Release multicast lock.]");
 			wifiMulticastLock.release();
 		}
-		
+
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[findServers][End of task. Bye bey.]");
-		
+
 		return availableServers;
 	}
-	
+
 	/**
 	 * Parsing incomming message from raw String to SimpleMessage..
 	 * @param incomingMessage Raw String.
@@ -278,18 +292,18 @@ public class UDPScanModeTask extends AsyncTask<Void, Void, ArrayList<Server>> {
 	 */
 	private SimpleMessage parseIncommingMessage(String incomingMessage) {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[parseIncommingMessage]");
-		
+
 		int messageId = Integer.valueOf(
 				incomingMessage.substring(0, incomingMessage.indexOf(
 						SimpleMessage.SEPARATOR)));
-		
+
 		String addInfo = incomingMessage.substring(
 				incomingMessage.indexOf(SimpleMessage.SEPARATOR),
 				incomingMessage.length());
-		
+
 		return new SimpleMessage(messageId, addInfo);
 	}
-	
+
 	/**
 	 * If user cancel task we need to close socket.
 	 */

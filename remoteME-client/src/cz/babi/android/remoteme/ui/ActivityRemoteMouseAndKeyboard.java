@@ -45,6 +45,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -59,47 +60,50 @@ import cz.babi.android.remoteme.service.ConnectionService;
  * @author dev.misiarz@gmail.com
  */
 public class ActivityRemoteMouseAndKeyboard extends Activity {
-	
+
 	private static final String TAG_CLASS_NAME =
 			ActivityRemoteMouseAndKeyboard.class.getSimpleName();
-	
+
 	private DrawView drawView;
 	private EditText editText;
 	private LinearLayout simpleLeayout;
-	
+
 	private ConnectionService connectionService;
 	private ServiceConnection serviceConnection;
-	
+
 	private SharedPreferences preferences;
-	
+
 	private boolean isClipboarSelected;
-	
+
 	private boolean isServiceBound = false;
-	
+
 	private boolean showAndHideKeyboard;
-	
+
+	/* This is used for checking, if activity is currently finishing. */
+	private boolean isActivityFinishing = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onCreate]");
-		
+
 		super.onCreate(savedInstanceState);
-		
+
 		serviceConnection = new ServiceConnection() {
 			@Override
 			public void onServiceConnected(ComponentName name, IBinder service) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onServiceConnected]");
 				connectionService = ((ConnectionService.ConnectionBinder)service).getService();
 			}
-			
+
 			@Override
 			public void onServiceDisconnected(ComponentName name) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onServiceDisconnected]");
 				connectionService = null;
 			}
 		};
-		
+
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
 		/* Here we obtain which keyboard simulation is selected and set class variable. */
 		String currentKeyboardSimulation = preferences.getString(
 				getString(R.string.pref_name_keyboard_simulation),
@@ -107,11 +111,11 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 		if(currentKeyboardSimulation.compareTo(getString(R.string.pref_value_clipboard))==0)
 			isClipboarSelected = true;
 		else isClipboarSelected = false;
-		
+
 		bindService();
-		
+
 		drawView = new DrawView(this);
-		
+
 		editText = new EditText(this);
 		editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 		/* Because we are using 'invisible' edit text for handle key stroke we need to add some
@@ -124,9 +128,9 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				String oneCharacter = s.subSequence(start, start+count).toString();
-				
+
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onTextChanged][" + oneCharacter + "]");
-				
+
 				/* If length of character is 0, it means that backspace was stroke. */
 				if(oneCharacter.length()==0) {
 					if(!connectionService.keyStroke(Common.BACK_SPACE_KEY_STROKE));
@@ -139,55 +143,57 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 					}
 				}
 			}
-			
+
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,	int after) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[beforeTextChanged]");
 			}
-			
+
 			@Override
 			public void afterTextChanged(Editable s) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[afterTextChanged]");
 			}
 		});
-		
+
 		simpleLeayout = new LinearLayout(this);
 		simpleLeayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT));
 		simpleLeayout.addView(drawView);
 		simpleLeayout.addView(editText);
-		
+
 		setContentView(simpleLeayout);
-		
+
 		drawView.requestFocus();
-		
+
 		setOrientation(preferences);
+
+		setWakeLock();
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onKeyDown]");
-		
+
 		if(keyCode==KeyEvent.KEYCODE_MENU) {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onKeyDown][Menu pressed.]");
-			
+
 			showOrHideKeyboard();
-			
+
 			editText.requestFocus();
 			editText.setSelection(editText.getText().length());
-			
+
 			return true;
 		}
-		
+
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	/**
 	 * Bind service.
 	 */
 	private void bindService() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[bindService]");
-		
+
 		/* Establish a connection with the service.  We use an explicit
 		 * class name because we want a specific service implementation that
 		 * we know will be running in our own process (and thus won't be
@@ -196,55 +202,59 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 				ConnectionService.class), serviceConnection, Context.BIND_AUTO_CREATE);
 		isServiceBound = true;
 	}
-	
+
 	/**
 	 * Unbind service.
 	 */
 	private void unbindService() {
 		if (isServiceBound) {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[unbindService]");
-			
+
 			/* Detach our existing connection. */
 			unbindService(serviceConnection);
 			isServiceBound = false;
 		}
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onDestroy]");
-		
+
 		unbindService();
-		
+
 		super.onDestroy();
 	}
-	
+
 	private void showOrHideKeyboard() {
 		InputMethodManager inputMethodManager = (InputMethodManager)
 				getSystemService(Context.INPUT_METHOD_SERVICE);
-		
+
 		if(showAndHideKeyboard) {
 			inputMethodManager.toggleSoftInput(
 					InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-			
+
 			showAndHideKeyboard = false;
 		} else {
 			inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED,
 					InputMethodManager.HIDE_IMPLICIT_ONLY);
-			
+
 			showAndHideKeyboard = true;
 		}
 	}
-	
+
 	/**
 	 * Close activity
 	 */
 	private void doFinish() {
-		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[doFinish]");
-		
-		this.finish();
+		if(!isActivityFinishing) {
+			isActivityFinishing = true;
+
+			this.finish();
+
+			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[doFinish][Do Finish]");
+		}
 	}
-	
+
 	/**
 	 * Set orientation.
 	 */
@@ -252,14 +262,24 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 		String currentOrientationLock = preferences.
 				getString(getString(R.string.pref_name_orientation_lock),
 						getString(R.string.pref_value_default));
-		
+
 		if(currentOrientationLock.equals(getString(R.string.pref_value_portait))) {
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else if(currentOrientationLock.equals(getString(R.string.pref_value_landscape))) {
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		}
 	}
-	
+
+	/**
+	 * Set wake lock.
+	 */
+	private void setWakeLock() {
+		boolean wakeLock = preferences.
+				getBoolean(getString(R.string.pref_name_keep_device_awake), false);
+
+		if(wakeLock) getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+	}
+
 	/**
 	 * With this class we are able to draw a line in touch moving.
 	 *
@@ -268,86 +288,89 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 	 * @author johncarl
 	 */
 	private class DrawView extends View {
-		
+
 		private final String TAG_CLASS_NAME = DrawView.class.getSimpleName();
-		
+
 		private List<PointF> linePoints;
-		
+
 		private Paint paintText;
 		private Paint paintLine;
-		
+
 		private Path linePath;
-		
+
 		private GestureDetector gestureDetector;
-		
+
 		float mouseWheelSmooth;
-		
+
 		private final int backgroundColor = Color.WHITE;
 		private final int paintColor = Color.rgb(255, 165, 0);
 		private final int fontColor = Color.GRAY;
-		
+
 		private final int textSpaceLine;
 		private final int textYPosition;
-		
+
 		private GestureDetector.SimpleOnGestureListener simpleOnGestureListener =
 				new GestureDetector.SimpleOnGestureListener() {
-			
+
 			@Override
 			public boolean onDown(MotionEvent e) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onDown]");
-				
+
 				linePoints.clear();
-				
+
 				invalidate();
-				
+
 				PointF point = new PointF();
 				point.x = e.getX();
 				point.y = e.getY();
-				
+
 				linePoints.add(point);
-				
+
 				return true;
 			}
-			
+
 			@Override
 			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 					float velocityY) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onFling]");
-				
+
 				return true;
 			}
-			
+
 			@Override
 			public void onLongPress(MotionEvent e) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onLongPress]");
-				
+
 				if(!connectionService.mouseRightClick()) doFinish();
-				
+
 				invalidate();
 			}
-			
+
 			@Override
 			public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 					float distanceY) {
-				
+
+				/* If connection is lost and activity is finishing now. */
+				if(isActivityFinishing) return true;
+
 				/* For scrolling efect we need to catch up two or more finger movement. */
 				if(e2.getPointerCount()==1) {
 					if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onScroll][Mooving.][distance X: " + distanceX + "][distance Y: " + distanceY + "]");
 					if(!connectionService.moveMouse(distanceX, distanceY)) doFinish();
-					
+
 					if(linePoints.size()>50) linePoints.remove(0);
-					
+
 					PointF point = new PointF();
-					
+
 					point.x = e2.getX();
 					point.y = e2.getY();
-					
+
 					linePoints.add(point);
-					
+
 					invalidate();
 				} else if(e2.getPointerCount()==2) {
 					float finalDistanceY = distanceY*mouseWheelSmooth;
-					
+
 					if(distanceY>0) {
 						if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onScroll][Scrolling up.]");
 						if(!connectionService.mouseWheel(finalDistanceY)) doFinish();
@@ -355,60 +378,60 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 						if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onScroll][Scrolling down.]");
 						if(!connectionService.mouseWheel(finalDistanceY)) doFinish();
 					}
-					
+
 					linePoints.clear();
-					
+
 					invalidate();
 				}
-				
+
 				return true;
 			}
-			
+
 			@Override
 			public void onShowPress(MotionEvent e) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onShowPress]");
 			}
-			
+
 			@Override
 			public boolean onSingleTapUp(MotionEvent e) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onSingleTapUp]");
-				
+
 				if(!connectionService.mouseLeftClick()) doFinish();
-				
+
 				return true;
 			}
-			
+
 			@Override
 			public boolean onDoubleTap(MotionEvent e) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onDoubleTap]");
-				
+
 				if(!connectionService.mouseLeftClick()) doFinish();
-				
+
 				return true;
 			}
 		};
-		
+
 		/**
 		 * Constructor.
 		 * @param context Context.
 		 */
 		public DrawView(Context context) {
 			super(context);
-			
+
 			linePoints = new ArrayList<PointF>();
-			
+
 			paintText = new Paint();
 			paintLine = new Paint();
-			
+
 			linePath = new Path();
-			
+
 			gestureDetector = new GestureDetector(getContext(),
 					simpleOnGestureListener, null, false);
-			
+
 			setFocusable(true);
 			setFocusableInTouchMode(true);
 			setBackgroundColor(backgroundColor);
-			
+
 			int textSize = 23;
 			if(Common.getDisplayHeight(context)>800) {
 				textSpaceLine = Common.getDisplayHeight(context)/280;
@@ -419,29 +442,29 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 				textYPosition = (int)(Common.getDisplayHeight(context)/4.5);
 				textSize = Common.getDisplayWidth(getContext())/24;
 			}
-			
+
 			paintLine.setColor(paintColor);
 			paintLine.setAntiAlias(true);
 			paintLine.setStrokeWidth(Common.getDisplayWidth(getContext())/70);
 			paintLine.setStyle(Style.STROKE);
-			
+
 			paintText.setTextSize(textSize);
 			paintText.setColor(fontColor);
 			paintText.setAntiAlias(true);
 			paintText.setTextAlign(Align.CENTER);
-			
+
 			showAndHideKeyboard = false;
-			
+
 			mouseWheelSmooth = (float)preferences.getInt(
 					getString(R.string.pref_name_mouse_wheel_smooth), 40) / 65;
 		}
-		
+
 		@SuppressLint("DrawAllocation")
 		@Override
 		public void onDraw(Canvas canvas) {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onDraw]");
 			linePath = new Path();
-			
+
 			/* If there is only one point (single touch) we can draw a circle. */
 			if(linePoints.size()==1) {
 				canvas.drawCircle(linePoints.get(0).x, linePoints.get(0).y, 10, paintLine);
@@ -467,7 +490,7 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 						}
 					}
 				}
-				
+
 				boolean first = true;
 				for(int i=0; i<linePoints.size(); i++) {
 					PointF point = linePoints.get(i);
@@ -481,10 +504,10 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 								point.x, point.y);
 					}
 				}
-				
+
 				canvas.drawPath(linePath, paintLine);
 			}
-			
+
 			String textToDraw = getResources().getString(R.string.remote_mouse_description_text);
 			int x = canvas.getWidth()/2;
 			int y = canvas.getHeight()/2-textYPosition;
@@ -493,32 +516,32 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 				y += -paintLine.ascent()*textSpaceLine + paintLine.descent();
 			}
 		}
-		
+
 		@Override
 		public boolean onTouchEvent(MotionEvent event) {
 			/* Here we need to catch touch with three fingers. */
 			switch(event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_POINTER_DOWN:
-					if(event.getPointerCount()>=3) {
-						if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onTouchEvent]" +
-								"[Show/Hide keyboard.]");
-						
-						showOrHideKeyboard();
-						
-						linePoints.clear();
-						
-						invalidate();
-						
-						editText.requestFocus();
-						editText.setSelection(editText.getText().length());
-						
-						return true;
-					}
+			case MotionEvent.ACTION_POINTER_DOWN:
+				if(event.getPointerCount()>=3) {
+					if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onTouchEvent]" +
+							"[Show/Hide keyboard.]");
+
+					showOrHideKeyboard();
+
+					linePoints.clear();
+
+					invalidate();
+
+					editText.requestFocus();
+					editText.setSelection(editText.getText().length());
+
+					return true;
+				}
 			}
-			
+
 			return gestureDetector.onTouchEvent(event);
 		}
-		
+
 		/**
 		 * Class presents point object with X and Y coordinates.
 		 * 
@@ -526,9 +549,9 @@ public class ActivityRemoteMouseAndKeyboard extends Activity {
 		 * @author dev.misiarz@gmail.com
 		 */
 		private class PointF {
-			
+
 			public float x, y, dx, dy;
-			
+
 			/**
 			 * Constructor.
 			 */

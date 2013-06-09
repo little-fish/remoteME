@@ -5,9 +5,14 @@
 * Fix
 ------------------------------
 
+1.0.3 - 2013-06-05
+ + Added possibility to enable debbuging.
+ * Fixed wake lock.
+ * Small bug fixes.
+
 1.0.2 - 2013-03-21
- * Mouse and keyboard controller - fixed scrolling on some devices
- + Mouse and keyboard controller - show/hide keyboard via menu button
+ * Mouse and keyboard controller - fixed scrolling on some devices.
+ + Mouse and keyboard controller - show/hide keyboard via menu button.
 
 1.0.1 - 2013-03-09
  * On some devices scan mod did not work properly.

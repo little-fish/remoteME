@@ -92,17 +92,6 @@
         <service
             android:name="cz.babi.android.remoteme.service.ConnectionService"
         	android:icon="@drawable/app_icon" />
- 
-        <activity 
-            android:label="@string/text_app_name"
-            android:name=".trash.TestConnectedActivity"
-            android:theme="@style/HoloDarkDialogTheme" >
-        </activity>
-        <activity 
-            android:label="@string/text_app_name"
-            android:name=".trash.TestActivity"
-            android:theme="@style/HoloDarkDialogTheme" >
-        </activity>
   
     </application>
 

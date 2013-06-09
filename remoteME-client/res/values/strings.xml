@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <string name="text_app_name">remoteME</string>
-    <string name="text_app_version">1.0.2</string>
+    <string name="text_app_version">1.0.3</string>
     <string name="text_app_author">babi</string>
     <string name="text_server">Server</string>
     <string name="text_connected">Connected</string>
@@ -155,6 +155,7 @@
     <string name="preferences_category_global_text">Global</string>
     <string name="preferences_category_mouse_and_keyboard_text">Mouse and keyboard</string>
     <string name="preferences_category_connection_text">Connection</string>
+    <string name="preferences_category_others_text">Others</string>
     <string name="preferences_item_keyboard_simulation_text">Keyboard simulation</string>
     <string name="preferences_value_clipboard_simulation_text">Clipboard</string>
     <string name="preferences_value_clipboard_simulation_summary">Simulate Copy &amp; Paste. It provides writing special characters or characters with diacritical marks.</string>
@@ -177,4 +178,6 @@
     <string name="preferences_item_visible_remotes_summary">Select visible remotes.</string>
     <string name="preferences_item_notification_text">Notification</string>
     <string name="preferences_item_notification_summary">Show statusbar notification.</string>
+    <string name="preferences_item_debug_mode_text">Debug logging</string>
+    <string name="preferences_item_debug_mode_summary">Enable debug logging. For testing purposes only.</string>
 </resources>

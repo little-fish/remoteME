@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <string name="text_app_name">remoteME</string>
-    <string name="text_app_version">1.0.2</string>
+    <string name="text_app_version">1.0.3</string>
     <string name="text_app_author">babi</string>
     <string name="text_server">Server</string>
     <string name="text_connected">Připojeno</string>
@@ -155,6 +155,7 @@
     <string name="preferences_category_global_text">Hlavní</string>
     <string name="preferences_category_mouse_and_keyboard_text">Myš a klávesnice</string>
     <string name="preferences_category_connection_text">Připojení</string>
+    <string name="preferences_category_others_text">Ostatní</string>
     <string name="preferences_item_keyboard_simulation_text">Simulace klávesnice</string>
     <string name="preferences_value_clipboard_simulation_text">Simulace schránky</string>
     <string name="preferences_value_clipboard_simulation_summary">Simuluje funkci Kopírovat &amp; Vložit. Umožňuje psaní nestandardních znaků a znaků s diaktikou.</string>
@@ -177,4 +178,6 @@
     <string name="preferences_item_visible_remotes_summary">Umožňuje zobrazit/skrýt jednotlivé ovladače.</string>
     <string name="preferences_item_notification_text">Oznámení</string>
     <string name="preferences_item_notification_summary">Zobrazit oznámení o připojení ve stavové liště.</string>
+    <string name="preferences_item_debug_mode_text">Ladící režim</string>
+    <string name="preferences_item_debug_mode_summary">Povolit ladící režim. Pouze pro testovací účely.</string>
 </resources>

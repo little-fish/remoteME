@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -48,26 +49,27 @@ import cz.babi.android.remoteme.service.ConnectionService;
  * @author dev.misiarz@gmail.com
  */
 public class ActivityDialogListOfRemoteControllers extends FragmentActivity {
-	
+
 	private static final String TAG_CLASS_NAME =
 			ActivityDialogListOfRemoteControllers.class.getSimpleName();
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onCreate]");
-		
+
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_list_of_remote_controllers);
-		
+
 		/* Prevent Activity dialog from closing on outside touch. */
 		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB){
 			setFinishOnTouchOutside(false);
 		}
-		
+
 		setOrientation();
+		setWakeLock();
 	}
-	
+
 	/**
 	 * Set orientation.
 	 */
@@ -75,14 +77,24 @@ public class ActivityDialogListOfRemoteControllers extends FragmentActivity {
 		String currentOrientationLock = PreferenceManager.getDefaultSharedPreferences(this).
 				getString(getString(R.string.pref_name_orientation_lock),
 						getString(R.string.pref_value_default));
-		
+
 		if(currentOrientationLock.equals(getString(R.string.pref_value_portait))) {
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else if(currentOrientationLock.equals(getString(R.string.pref_value_landscape))) {
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		}
 	}
-	
+
+	/**
+	 * Set wake lock.
+	 */
+	private void setWakeLock() {
+		boolean wakeLock = PreferenceManager.getDefaultSharedPreferences(this).
+				getBoolean(getString(R.string.pref_name_keep_device_awake), false);
+
+		if(wakeLock) getWindow().addFlags(LayoutParams.FLAG_KEEP_SCREEN_ON);
+	}
+
 	/**
 	 * This fragment holds list of remote controllers.
 	 *
@@ -90,34 +102,34 @@ public class ActivityDialogListOfRemoteControllers extends FragmentActivity {
 	 * @author dev.misiarz@gmail.com
 	 */
 	public static class RemoteControllersFragment extends ListFragment implements OnItemClickListener {
-		
+
 		private static final String TAG_CLASS_NAME = RemoteControllersFragment.class.getSimpleName();
-		
+
 		private ConnectionService connectionService;
 		private ServiceConnection serviceConnection;
-		
+
 		private boolean isServiceBound = false;
-		
+
 		private Button btnCancel = null;
-		
+
 		private View fragmentView = null;
-		
+
 		private RemoteControllerArrayAdapter rcArrayAdapter = null;
-		
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onCreateView]");
-			
+
 			/* After device rotation we need to check if fragment's view is null or not.
 			 * If not, we can restore whole view like it was before rotation. */
 			if(this.fragmentView!=null) {
 				((ViewGroup)this.fragmentView.getParent()).removeView(this.fragmentView);
 				return this.fragmentView;
 			}
-			
+
 			this.fragmentView = inflater.inflate(R.layout.fragment_remote_controllers, container, false);
-			
+
 			btnCancel = (Button)this.fragmentView.findViewById(
 					R.id.remote_controllers_btn_cancel);
 			btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -126,9 +138,9 @@ public class ActivityDialogListOfRemoteControllers extends FragmentActivity {
 					getActivity().finish();
 				}
 			});
-			
+
 			setRetainInstance(true);
-			
+
 			/* Create new service connection. */
 			serviceConnection = new ServiceConnection() {
 				@Override
@@ -136,45 +148,45 @@ public class ActivityDialogListOfRemoteControllers extends FragmentActivity {
 					if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onServiceConnected]");
 					connectionService = ((ConnectionService.ConnectionBinder)service).getService();
 				}
-				
+
 				@Override
 				public void onServiceDisconnected(ComponentName name) {
 					if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onServiceDisconnected]");
 					connectionService = null;
 				}
 			};
-			
+
 			return this.fragmentView;
 		}
-		
+
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onViewCreated]");
-			
+
 			/* Bind service. */
 			bindService();
-			
+
 			/* Obtain an adapter. */
 			rcArrayAdapter = RemoteControllerArrayAdapter.getInstance(getActivity(),
 					R.layout.row_remote_controller);
-			
+
 			/* Sort adapter. */
 			rcArrayAdapter.sort(new RemoteControllerComparator(getActivity()));
-			
+
 			/* Set adapter. */
 			setListAdapter(rcArrayAdapter);
-			
+
 			/* Set listener to list view. */
 			getListView().setOnItemClickListener(this);
-			
+
 			super.onActivityCreated(savedInstanceState);
 		}
-		
+
 		@Override
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 			/* Clicked remote controller. */
 			RemoteController remoteController = rcArrayAdapter.getController(position);
-			
+
 			/* Because controller for mouse and keyboard is not define in xml we need to start its
 			 * activity in different way. */
 			if(remoteController.getTitle().equals(
@@ -185,7 +197,7 @@ public class ActivityDialogListOfRemoteControllers extends FragmentActivity {
 									remoteController.getRows()==null) {
 				Intent mouseAndKeyboard = new Intent(getActivity(),
 						ActivityRemoteMouseAndKeyboard.class);
-				
+
 				getActivity().startActivity(mouseAndKeyboard);
 			} else {
 				/* Need to put remote controller object to intent. */
@@ -194,50 +206,50 @@ public class ActivityDialogListOfRemoteControllers extends FragmentActivity {
 				getActivity().startActivity(remoteIntent);
 			}
 		}
-		
+
 		@Override
 		public void onSaveInstanceState(Bundle outState) {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onSaveInstanceState]");
-			
+
 			super.onSaveInstanceState(outState);
-			
+
 			this.fragmentView = this.getView();
-			
+
 			/* Need to unbind service. */
 			unbindService();
 		}
-		
+
 		@Override
 		public void onResume() {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onResume]");
-			
+
 			/* Here we need to check, if service is connected to server.
 			 * If not - finish activity. */
 			if(connectionService!=null)
 				if(connectionService.isDisconnectWithError()) getActivity().finish();
-			
+
 			super.onResume();
 		}
-		
+
 		@Override
 		public void onDestroy() {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[onDestroy]");
-			
+
 			super.onDestroy();
-			
+
 			/* Need to unbind service. */
 			unbindService();
-			
+
 			/* Service is no needed anymore. */
 			connectionService.stopSelf();
 		}
-		
+
 		/**
 		 * Bind service.
 		 */
 		private void bindService() {
 			if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[bindService]");
-			
+
 			/* Establish a connection with the service.  We use an explicit
 			 * class name because we want a specific service implementation that
 			 * we know will be running in our own process (and thus won't be
@@ -246,14 +258,14 @@ public class ActivityDialogListOfRemoteControllers extends FragmentActivity {
 					ConnectionService.class), serviceConnection, Context.BIND_AUTO_CREATE);
 			isServiceBound = true;
 		}
-		
+
 		/**
 		 * Unbind service.
 		 */
 		void unbindService() {
 			if(isServiceBound) {
 				if(Common.DEBUG) Log.d(TAG_CLASS_NAME, "[unbindService]");
-				
+
 				/* Detach our existing connection. */
 				getActivity().unbindService(serviceConnection);
 				isServiceBound = false;

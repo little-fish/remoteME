@@ -18,7 +18,7 @@
     <item type="string" name="pref_name_show_notification">SHOW_NOTIFICATION</item>
     
     <item type="string" name="pref_name_orientation_lock">ORIENTATION_LOCK</item>
-    <item type="string" name="pref_value_default">DEFAULT</item>
+    <item name="pref_name_debug_mode" type="string" >DEBUG</item><item type="string" name="pref_value_default">DEFAULT</item>
     <item type="string" name="pref_value_portait">PORTRAIT</item>
     <item type="string" name="pref_value_landscape">LANDSCAPE</item>
     
@@ -31,5 +31,6 @@
     <item type="string" name="pref_name_keyboard_simulation">KEYBOARD_SIMULATION</item>
     <item type="string" name="pref_value_key_stroke">KEY_STROKE</item>
     <item type="string" name="pref_value_clipboard">CLIPBOARD</item>
+    
     
 </resources>
