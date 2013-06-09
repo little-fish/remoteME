@@ -5,16 +5,10 @@
 * Fix
 ------------------------------
 
-<<<<<<< HEAD
 1.0.1 - xxx
- + Possibility to turn debug on via command line: "java -jar remoteME-server.jar -debug"
- * Bug fixes
+ + Possibility to turn debug on via command line: "java -jar remoteME-server.jar -debug".
+ * Small bug fixes.
  
 1.0.0 - 2013-03-07
  Major release.
-=======
-1.0.1
- + Possibility to turn debug on via command line: "java -jar remoteME-server.jar -debug"
-
-1.0.0 - Major release.
->>>>>>> branch 'master' of https://github.com/little-fish/remoteME.git
+ 
